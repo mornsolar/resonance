@@ -1,0 +1,87 @@
+---
+import Base from '../layouts/Base.astro';
+import { CONTACT_EMAIL, LINKEDIN_URL } from '../lib/config';
+
+const SPEAKER_KIT_URL = 'https://claude.ai/artifact/BcQcieUmFboLaaKzCfNY2P';
+
+const topics = [
+  {
+    title: 'Reclaiming Our Attention',
+    audience: 'Professionals, parents, educators',
+    summary: 'Practical experiments to build more intentional technology habits.',
+  },
+  {
+    title: 'Raising Humans in a Digital World',
+    audience: 'Parents, schools, educators',
+    summary: 'Simple ways to strengthen the parent–child connection.',
+  },
+  {
+    title: 'Wise Humans, Smart Technology',
+    audience: 'Leaders, technology conferences',
+    summary: 'Preserving human agency and wisdom as AI grows more capable.',
+  },
+];
+---
+<Base title="Speaking" description="Talks and workshops on attention, technology and being human, for parent groups, schools and professional audiences.">
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Speaking</p>
+        <h1>Talks and workshops on attention, technology and being human</h1>
+        <p class="lede">For parent groups, schools, and professional audiences, in person or online.</p>
+      </div>
+      <p class="quote">"As technology becomes smarter, how can we become wiser humans?"</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Topics</h2>
+      </div>
+      <div class="grid">
+        {topics.map((topic) => (
+          <article class="card">
+            <h3>{topic.title}</h3>
+            <span class="meta">{topic.audience}</span>
+            <p>{topic.summary}</p>
+          </article>
+        ))}
+      </div>
+      <div class="panel approach">
+        <p><strong>Approach:</strong> grounded science, personal storytelling, and simple experiments audiences can try that same evening.</p>
+        <p><strong>Outcome:</strong> audiences leave with one small, low-effort experiment to reset their attention.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="read">
+      <h2>Bio for organisers</h2>
+      <p class="fine-print">Feel free to copy this as it stands.</p>
+      <div class="panel bio">
+        <p>Chernyang Lee is a mathematician, former Principal Software Engineer, and speaker exploring a question: as technology becomes more intelligent, how can we become wiser humans? With a PhD in Mathematics and over a decade building sophisticated technology systems, he brings an unusual perspective to our increasingly digital lives. Following a career transition, he began exploring how intentional attention could transform relationships, starting within his own family. Drawing on behavioural science, first-principles thinking, and personal experimentation, he challenges conventional approaches to digital wellbeing: rather than relying on restrictions alone, he explores how people develop awareness, self-regulation, and agency. Through relatable stories, accessible science, and simple experiments, he helps parents and educators reconnect with young people and build healthier relationships with technology.</p>
+      </div>
+      <p class="kit-link"><a href={SPEAKER_KIT_URL} target="_blank" rel="noopener">View the one-page speaker kit →</a></p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="read">
+      <h2>Invite me to speak</h2>
+      <p>Tell me a little about your audience and what you're hoping they'll leave with, and I'll get back to you.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href={`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent('Speaking enquiry')}`}>Email me</a>
+        <a class="btn btn-secondary" href={LINKEDIN_URL} target="_blank" rel="noopener">Connect on LinkedIn</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .approach { margin-top: 20px; }
+  .approach p { margin: 0 0 8px; }
+  .approach p:last-child { margin: 0; }
+  .bio p { margin: 0; }
+  .kit-link { margin-top: 16px; font-weight: 600; }
+</style>

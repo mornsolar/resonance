@@ -1,0 +1,18 @@
+---
+import type { Story } from '../lib/stories';
+import { formatDate } from '../lib/stories';
+import { url } from '../lib/url';
+
+interface Props {
+  story: Story;
+}
+
+const { story } = Astro.props;
+const href = url(`/stories/${story.id}/`);
+---
+<article class="card">
+  <span class="meta">{formatDate(story.data.date)}</span>
+  <h3><a href={href}>{story.data.title}</a></h3>
+  <p>{story.data.summary}</p>
+  <a class="more" href={href} aria-label={`Read: ${story.data.title}`}>Read the story →</a>
+</article>

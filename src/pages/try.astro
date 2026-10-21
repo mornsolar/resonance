@@ -1,0 +1,187 @@
+---
+import Base from '../layouts/Base.astro';
+import { url } from '../lib/url';
+import { CONTACT_EMAIL } from '../lib/config';
+
+const triggers = [
+  {
+    value: 'automatic',
+    label: 'I did it automatically',
+    reflection:
+      "If it happened automatically, there wasn't really a decision to make. The habit got there before you did. That isn't a failure of willpower; it's simply what habits do.",
+  },
+  {
+    value: 'bored',
+    label: 'I was bored or waiting',
+    reflection:
+      "Waiting and boredom are when the phone is easiest to reach for. It fills the gap before we've even noticed there is one.",
+  },
+  {
+    value: 'escape',
+    label: 'I wanted to get away from an uncomfortable feeling',
+    reflection:
+      "Reaching for the phone to step away from a feeling is very human. It works for a moment, which is exactly why it's worth noticing.",
+  },
+  {
+    value: 'notification',
+    label: 'A notification caught my attention',
+    reflection:
+      "A notification is someone else's decision about when you pick up your phone. Noticing that is already taking a little of the decision back.",
+  },
+];
+
+const steps = [
+  {
+    name: 'trigger',
+    question: 'Think about the last time you opened your phone without planning to. What happened just before?',
+    options: triggers.map(({ value, label }) => ({ value, label })),
+  },
+  {
+    name: 'outcome',
+    question: 'What did you end up doing on it?',
+    options: [
+      { value: 'intended', label: 'What I meant to do' },
+      { value: 'elsewhere', label: 'Something else entirely' },
+      { value: 'unsure', label: "I honestly can't remember" },
+      { value: 'both', label: 'A bit of both' },
+    ],
+  },
+  {
+    name: 'feeling',
+    question: 'When you put it down, how did you feel?',
+    options: [
+      { value: 'fine', label: 'Fine' },
+      { value: 'flat', label: 'A bit flat' },
+      { value: 'annoyed', label: 'Annoyed with myself' },
+      { value: 'unnoticed', label: "I don't think I noticed" },
+    ],
+  },
+];
+---
+<Base title="A moment of choice" description="Three questions about the last time you picked up your phone without meaning to. Two minutes, nothing saved.">
+  <section class="section">
+    <div class="read">
+      <p class="eyebrow">Try something</p>
+      <h1>A moment of choice</h1>
+      <p class="lede">Three questions about the last time you picked up your phone without meaning to. It takes about two minutes. Your answers stay on this page; nothing is saved or sent anywhere.</p>
+
+      <form class="experiment" data-experiment>
+        {steps.map((step, index) => (
+          <fieldset class="step" data-step tabindex="-1">
+            <p class="step-count">{index + 1} of {steps.length}</p>
+            <legend>{step.question}</legend>
+            <div class="option-list">
+              {step.options.map((option) => (
+                <label>
+                  <input type="radio" name={step.name} value={option.value}>
+                  <span>{option.label}</span>
+                </label>
+              ))}
+            </div>
+            <p class="form-status" role="status" aria-live="polite"></p>
+            <button type="button" class="btn btn-primary" data-next>Continue</button>
+          </fieldset>
+        ))}
+
+        <div class="result" data-result tabindex="-1">
+          <h2>Here's what you noticed</h2>
+          <ul class="noted" data-noted></ul>
+          {triggers.map((trigger) => <p data-reflection={trigger.value}>{trigger.reflection}</p>)}
+          <div class="try-this">
+            <p class="eyebrow">One thing to try</p>
+            <p>Next time you reach for your phone, pause for one breath and say, out loud or in your head, what you're picking it up for and for how long. That's all. No app, no tracking.</p>
+          </div>
+          <p>You can close this page now. Really. If it changes anything, I'd love to hear about it.</p>
+          <div class="actions">
+            <a class="btn btn-secondary" href={url('/reset/')}>Go deeper: the one-week reset</a>
+            <a class="btn btn-secondary" href={`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent('What I noticed')}`}>Tell me what happened</a>
+          </div>
+          <p class="restart-row"><button type="button" class="quiet-toggle" data-restart>Start again</button></p>
+        </div>
+      </form>
+
+      <p class="fine-print after">Notice what's missing: no score, no streak, no reason to come back unless you want to.</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .experiment { margin-top: 32px; }
+  .step + .step { margin-top: 32px; }
+  .result h2 { font-size: clamp(24px, 3vw, 30px); }
+  .restart-row { margin: 16px 0 0; }
+  .after { margin-top: 20px; }
+  html:not(.js) [data-next],
+  html:not(.js) [data-restart],
+  html:not(.js) [data-noted] { display: none; }
+</style>
+
+<script>
+  const PROMPT = "Choose whichever is closest. There's no wrong answer.";
+
+  function setUpExperiment(form: HTMLFormElement): void {
+    const steps = [...form.querySelectorAll<HTMLFieldSetElement>('[data-step]')];
+    const result = form.querySelector<HTMLElement>('[data-result]');
+    const noted = form.querySelector<HTMLUListElement>('[data-noted]');
+    if (!result || !noted || steps.length === 0) return;
+
+    const showStep = (index: number, shouldFocus: boolean): void => {
+      steps.forEach((step, i) => {
+        step.hidden = i !== index;
+      });
+      result.hidden = true;
+      if (shouldFocus) steps[index].focus();
+    };
+
+    const selectedInput = (step: HTMLFieldSetElement): HTMLInputElement | null =>
+      step.querySelector<HTMLInputElement>('input:checked');
+
+    const showResult = (): void => {
+      const answers = steps.map(selectedInput);
+      const items = answers.map((input) => {
+        const item = document.createElement('li');
+        item.textContent = `· ${input?.closest('label')?.textContent?.trim() ?? ''}`;
+        return item;
+      });
+      noted.replaceChildren(...items);
+
+      const trigger = answers[0]?.value;
+      for (const paragraph of result.querySelectorAll<HTMLElement>('[data-reflection]')) {
+        paragraph.hidden = paragraph.dataset.reflection !== trigger;
+      }
+
+      steps.forEach((step) => {
+        step.hidden = true;
+      });
+      result.hidden = false;
+      result.focus();
+    };
+
+    steps.forEach((step, index) => {
+      step.querySelector('[data-next]')?.addEventListener('click', () => {
+        const status = step.querySelector<HTMLElement>('.form-status');
+        if (!selectedInput(step)) {
+          if (status) status.textContent = PROMPT;
+          return;
+        }
+        if (status) status.textContent = '';
+        if (index < steps.length - 1) {
+          showStep(index + 1, true);
+        } else {
+          showResult();
+        }
+      });
+    });
+
+    form.querySelector('[data-restart]')?.addEventListener('click', () => {
+      form.reset();
+      showStep(0, true);
+    });
+
+    form.addEventListener('submit', (event) => event.preventDefault());
+    showStep(0, false);
+  }
+
+  const experimentForm = document.querySelector<HTMLFormElement>('[data-experiment]');
+  if (experimentForm) setUpExperiment(experimentForm);
+</script>

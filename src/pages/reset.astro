@@ -1,0 +1,111 @@
+---
+import Base from '../layouts/Base.astro';
+import { url } from '../lib/url';
+import { FORMSPREE_ENDPOINT, BOOKING_URL } from '../lib/config';
+---
+<Base title="The one-week reset" description="A structured one-week phone-habit reset. I'm running it myself, and inviting a small group to run it alongside me.">
+  <section class="section">
+    <div class="read">
+      <p class="eyebrow">An honest experiment, not a product</p>
+      <h1>A one-week phone reset. I'm running it myself, and I'd like a few more people to run it with me.</h1>
+      <p class="lede">Not an app. Not a subscription. A structured week of saying what you'll use your phone for before you pick it up, then locking it away for the same stretch afterwards, to see whether the change sticks once the structure is gone.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="#join">Register your interest</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="read">
+      <h2>What this actually is</h2>
+      <p>Before each time you pick up your phone, you declare three things, out loud or written down: why you need it right now, which app or apps you'll use, and how long you need. You use it freely for that window. When the window closes, the phone gets locked away for the same length of time before you can pick it up again. No renegotiating, no "just five more minutes".</p>
+      <p>You choose the lock yourself: a timer, a screen-time limit, a lockbox, handing it to someone else for a stretch. The method doesn't matter. The ritual does: declare before, lock after, no exceptions.</p>
+      <p class="quote">"More like training a muscle than an app that should be on forever. The locked-up stretches are inconvenient, and that's only acceptable because it's bounded and you chose it."</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="read">
+      <h2>Why I'm asking you to join, not buy</h2>
+      <p>I tested an early, informal version of this on myself first, and my daughter ended up teaching me something I hadn't planned for. <a href={url('/stories/phone-lock-prototype/')}>You can read that story here →</a></p>
+      <div class="note-box">
+        <p>What I haven't done yet is run the full, structured one-week version properly. I don't know whether what changed for me in that small moment holds up over a real week, for people who aren't me. That's genuinely the open question. This page exists to find a few people willing to find out with me, not to sell something I've already proven works.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="read">
+      <h2>What I'm asking of you</h2>
+      <ol class="steps">
+        <li><p>Commit to one week of the declare-then-lock ritual, plus a short baseline day before it starts.</p></li>
+        <li><p>Notice and jot down what happens. A few lines a day is enough.</p></li>
+        <li><p>Talk to me honestly afterwards about what changed, what didn't, and whether it stuck once the week ended.</p></li>
+      </ol>
+      <p class="note-box spaced">This is free, and it's genuinely small: a handful of people, because I want to pay attention to each person's week, not because of manufactured scarcity. I'll be in touch directly to arrange timing once a small group is together.</p>
+    </div>
+  </section>
+
+  <section class="section" id="join">
+    <div class="read">
+      <h2>Register your interest</h2>
+      <p>It takes a minute. No payment, no app to download. Just tell me you're in.</p>
+
+      <div class="panel booking">
+        <p>Prefer to talk it through first? On the call I'll ask about your past phone habits, then answer any questions about the week.</p>
+        <a class="btn btn-secondary" href={BOOKING_URL} target="_blank" rel="noopener">Book a 15-minute chat →</a>
+      </div>
+      <p class="divider">or fill in the form below</p>
+
+      <form
+        class="panel stack"
+        action={FORMSPREE_ENDPOINT}
+        method="POST"
+        data-ajax-form
+        data-success="Thank you, you're in. I'll email you personally within a couple of days."
+      >
+        <input type="hidden" name="_subject" value="One-Week Reset: new interest registration">
+        <input type="hidden" name="form" value="one-week-reset">
+        <div class="field">
+          <label for="reset-name">Name</label>
+          <input type="text" id="reset-name" name="name" required autocomplete="name">
+        </div>
+        <div class="field">
+          <label for="reset-email">Email</label>
+          <input type="email" id="reset-email" name="email" required autocomplete="email">
+        </div>
+        <fieldset class="field">
+          <legend>This would be for</legend>
+          <div class="choices">
+            <label><input type="radio" name="who_for" value="myself" required> my own phone habits</label>
+            <label><input type="radio" name="who_for" value="a teen I look after"> a teen I look after</label>
+          </div>
+        </fieldset>
+        <div class="field">
+          <label for="reset-habit">What's the one phone habit you'd most like to change? <span class="hint">Optional</span></label>
+          <textarea id="reset-habit" name="habit_to_change"></textarea>
+        </div>
+        <fieldset class="field">
+          <legend>If this became an ongoing paid offering later, would you expect to pay for it? <span class="hint">Optional, just curious, no commitment either way</span></legend>
+          <div class="choices">
+            <label><input type="radio" name="willing_to_pay" value="yes"> Yes</label>
+            <label><input type="radio" name="willing_to_pay" value="maybe"> Maybe</label>
+            <label><input type="radio" name="willing_to_pay" value="no"> No</label>
+          </div>
+        </fieldset>
+        <div>
+          <button class="btn btn-primary" type="submit">Count me in</button>
+          <p class="form-status" role="status" aria-live="polite"></p>
+          <p class="fine-print">I'll email you directly to arrange things. No spam, and no list beyond this.</p>
+        </div>
+      </form>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .booking { display: flex; flex-direction: column; gap: 14px; align-items: flex-start; }
+  .booking p { margin: 0; color: var(--ink-soft); }
+  .divider { text-align: center; font-size: 12.5px; color: var(--ink-faint); letter-spacing: 0.08em; text-transform: uppercase; margin: 22px 0; }
+  .spaced { margin-top: 22px; }
+</style>

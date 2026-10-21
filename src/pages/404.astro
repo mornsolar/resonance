@@ -1,0 +1,17 @@
+---
+import Base from '../layouts/Base.astro';
+import { url } from '../lib/url';
+---
+<Base title="Page not found">
+  <section class="section">
+    <div class="read">
+      <p class="eyebrow">404</p>
+      <h1>This page seems to have wandered off.</h1>
+      <p class="lede">Which, on this site, is almost the point. Still, here's the way back.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href={url('/')}>Go to the home page</a>
+        <a class="btn btn-secondary" href={url('/stories/')}>Read the stories</a>
+      </div>
+    </div>
+  </section>
+</Base>

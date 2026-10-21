@@ -1,0 +1,28 @@
+---
+import { FORMSPREE_ENDPOINT } from '../lib/config';
+---
+<section class="pause" id="sunday-pause" aria-labelledby="pause-title">
+  <div class="wrap">
+    <div class="pause-inner">
+      <p class="eyebrow">The Sunday Pause</p>
+      <h2 id="pause-title">One short email. One small change.</h2>
+      <p>A story, an insight, and one small thing to try away from your screen. Sent on Sundays, short enough to read in your inbox.</p>
+      <form
+        action={FORMSPREE_ENDPOINT}
+        method="POST"
+        data-ajax-form
+        data-success="Thank you, you're on the list. The next Sunday Pause will come straight to your inbox."
+      >
+        <input type="hidden" name="_subject" value="Sunday Pause: new subscriber">
+        <input type="hidden" name="form" value="sunday-pause">
+        <div class="pause-row">
+          <label for="pause-email" class="visually-hidden">Your email address</label>
+          <input id="pause-email" type="email" name="email" required autocomplete="email" placeholder="Your email address">
+          <button class="btn btn-primary" type="submit">Join the Sunday Pause</button>
+        </div>
+        <p class="form-status" role="status" aria-live="polite"></p>
+      </form>
+      <p class="fine-print">Free. I'll only use your email to send the Sunday Pause. Reply "stop" to any issue and I'll take you off straight away.</p>
+    </div>
+  </div>
+</section>

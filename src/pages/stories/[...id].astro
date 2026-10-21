@@ -1,0 +1,90 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { getPublishedStories, formatDate, type Story } from '../../lib/stories';
+import { url } from '../../lib/url';
+import { CONTACT_EMAIL } from '../../lib/config';
+
+const WORDS_PER_MINUTE = 220;
+
+export async function getStaticPaths() {
+  const stories = await getPublishedStories();
+  return stories.map((story) => ({ params: { id: story.id }, props: { story } }));
+}
+
+interface Props {
+  story: Story;
+}
+
+const { story } = Astro.props;
+const { Content } = await render(story);
+const wordCount = (story.body ?? '').split(/\s+/).filter(Boolean).length;
+const minutes = Math.max(1, Math.round(wordCount / WORDS_PER_MINUTE));
+---
+<Base title={story.data.title} description={story.data.summary}>
+  <article>
+    <header class="story-header">
+      <div class="read">
+        <p class="eyebrow"><a href={url('/stories/')}>Stories</a></p>
+        <h1>{story.data.title}</h1>
+        <p class="lede">{story.data.summary}</p>
+        <div class="story-tools">
+          <span>{formatDate(story.data.date)} · {minutes} min read</span>
+          <button type="button" class="quiet-toggle" data-quiet-toggle aria-pressed="false">Quiet reading</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="read prose">
+      <Content />
+    </div>
+
+    <aside class="read" aria-labelledby="reflect-title">
+      <div class="reflect">
+        <p class="eyebrow" id="reflect-title">A question to sit with</p>
+        <p class="question">{story.data.reflection}</p>
+        <p>Reflect on it privately. Or, if something comes up you'd like to share, I'd genuinely like to hear it.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href={url('/try/')}>Try a 2-minute pause</a>
+          <a class="btn btn-secondary" href={`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(`About "${story.data.title}"`)}`}>Write to me</a>
+        </div>
+      </div>
+    </aside>
+  </article>
+</Base>
+
+<script>
+  const STORAGE_KEY = 'resonance-quiet-reading';
+  const root = document.documentElement;
+  const button = document.querySelector<HTMLButtonElement>('[data-quiet-toggle]');
+
+  function readPreference(): boolean {
+    try {
+      return localStorage.getItem(STORAGE_KEY) === 'on';
+    } catch {
+      return false;
+    }
+  }
+
+  function savePreference(isQuiet: boolean): void {
+    try {
+      localStorage.setItem(STORAGE_KEY, isQuiet ? 'on' : 'off');
+    } catch {
+      // Storage can be blocked; the toggle still works for this visit.
+    }
+  }
+
+  function applyQuiet(isQuiet: boolean): void {
+    root.classList.toggle('quiet', isQuiet);
+    if (!button) return;
+    button.textContent = isQuiet ? 'Show the menu again' : 'Quiet reading';
+    button.setAttribute('aria-pressed', String(isQuiet));
+  }
+
+  applyQuiet(readPreference());
+  button?.addEventListener('click', () => {
+    const isQuiet = !root.classList.contains('quiet');
+    applyQuiet(isQuiet);
+    savePreference(isQuiet);
+  });
+</script>

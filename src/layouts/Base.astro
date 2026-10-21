@@ -1,0 +1,94 @@
+---
+import '../styles/global.css';
+import SundayPause from '../components/SundayPause.astro';
+import { url } from '../lib/url';
+import { SITE_NAME, FOUNDER_NAME, CONTACT_EMAIL, LINKEDIN_URL } from '../lib/config';
+
+interface Props {
+  title?: string;
+  description?: string;
+  hidePause?: boolean;
+}
+
+const {
+  title,
+  description = 'A place to explore how we can build a wiser relationship with technology, with ourselves, and with the people around us.',
+  hidePause = false,
+} = Astro.props;
+
+const pageTitle = title ? `${title} · ${SITE_NAME}` : `${SITE_NAME} · A little less scrolling. A little more living.`;
+const currentPath = Astro.url.pathname.replace(/\/$/, '');
+
+const navItems = [
+  { href: url('/stories/'), label: 'Stories' },
+  { href: url('/try/'), label: 'Try' },
+  { href: url('/speaking/'), label: 'Speaking' },
+  { href: url('/about/'), label: 'About' },
+];
+
+function isCurrent(href: string): boolean {
+  const target = href.replace(/\/$/, '');
+  return currentPath === target || currentPath.startsWith(`${target}/`);
+}
+---
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{pageTitle}</title>
+  <meta name="description" content={description}>
+  <meta property="og:title" content={pageTitle}>
+  <meta property="og:description" content={description}>
+  <meta property="og:type" content="website">
+  <link rel="icon" type="image/svg+xml" href={url('/favicon.svg')}>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script is:inline>
+    document.documentElement.classList.add('js');
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href={url('/')}>
+        <svg viewBox="0 0 32 32" aria-hidden="true">
+          <circle cx="16" cy="16" r="5" fill="#365D50" />
+          <circle cx="16" cy="16" r="10" fill="none" stroke="#365D50" stroke-width="1.6" opacity="0.55" />
+          <circle cx="16" cy="16" r="14.5" fill="none" stroke="#365D50" stroke-width="1.2" opacity="0.25" />
+        </svg>
+        {SITE_NAME}
+      </a>
+      <nav class="nav" aria-label="Main">
+        {navItems.map((item) => (
+          <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>{item.label}</a>
+        ))}
+        <a class="nav-cta" href="#sunday-pause">The Sunday Pause</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <slot />
+  </main>
+
+  {!hidePause && <SundayPause />}
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <span>© {new Date().getFullYear()} {FOUNDER_NAME}. Made to be left, not scrolled.</span>
+      <span class="footer-links">
+        <a href={`mailto:${CONTACT_EMAIL}`}>Email</a>
+        <a href={LINKEDIN_URL} target="_blank" rel="noopener">LinkedIn</a>
+        <a href={url('/reset/')}>One-week reset</a>
+      </span>
+    </div>
+  </footer>
+
+  <script>
+    import '../scripts/forms';
+  </script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+---
+import Base from '../layouts/Base.astro';
+import StoryCard from '../components/StoryCard.astro';
+import { getPublishedStories } from '../lib/stories';
+import { url } from '../lib/url';
+
+const HOME_STORY_COUNT = 3;
+const stories = (await getPublishedStories()).slice(0, HOME_STORY_COUNT);
+---
+<Base>
+  <section class="section hero">
+    <div class="wrap">
+      <p class="eyebrow">Resonance · the art of being present</p>
+      <h1>A little less scrolling.<br>A little more living.</h1>
+      <p class="lede">A place to explore how we can build a wiser relationship with technology, so it serves what we value instead of competing with it.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href={url('/try/')}>Try a 2-minute pause</a>
+        <a class="btn btn-secondary" href={url('/stories/')}>Read the stories</a>
+      </div>
+      <p class="hero-note">No guilt. No streaks. No pressure to give up technology.</p>
+    </div>
+  </section>
+
+  <section class="section recognise">
+    <div class="wrap">
+      <p class="eyebrow">You might recognise this</p>
+      <h2>You picked up your phone for one thing. Twenty minutes later, you were somewhere else.</h2>
+      <p class="lede">Most of us have been there. Resonance is about what makes those moments happen, and what we can do differently, starting small: a story to recognise yourself in, an experiment to try, and a short note on Sundays.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Stories</p>
+        <h2>Real days, small experiments</h2>
+        <p>Everything here starts with something I've actually tried on my own life, written up honestly, including the parts that didn't go to plan.</p>
+      </div>
+      <div class="grid">
+        {stories.map((story) => <StoryCard story={story} />)}
+      </div>
+      <p class="see-all"><a href={url('/stories/')}>All stories →</a></p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Try something</p>
+        <h2>Something you can do today</h2>
+      </div>
+      <div class="grid">
+        <article class="card card-sage">
+          <h3><a href={url('/try/')}>A 2-minute pause</a></h3>
+          <p>Three questions about the last time you picked up your phone without meaning to. No sign-up, and nothing is saved.</p>
+          <a class="more" href={url('/try/')}>Try it →</a>
+        </article>
+        <article class="card card-twilight">
+          <h3><a href={url('/reset/')}>The one-week reset</a></h3>
+          <p>A small pilot: say what you're picking your phone up for and for how long, then lock it away for the same stretch afterwards. I'm looking for a few people to run it with me.</p>
+          <a class="more" href={url('/reset/')}>Find out more →</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap about-row">
+      <img class="headshot" src={url('/headshot.webp')} alt="Chernyang Lee" width="120" height="120">
+      <div class="about-text">
+        <p class="eyebrow">Who's behind this</p>
+        <h2>Hello, I'm Chernyang.</h2>
+        <p>I'm a mathematician who spent over a decade building software. These days I'm asking a different question: as technology becomes smarter, how can we become wiser humans? I test every idea on myself first, and share what I find, including what doesn't work.</p>
+        <div class="actions">
+          <a class="btn btn-secondary" href={url('/about/')}>More about me</a>
+          <a class="btn btn-secondary" href={url('/speaking/')}>Talks and workshops</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero { padding-top: clamp(40px, 6vw, 72px); }
+  .hero .lede { max-width: 620px; margin-bottom: 28px; }
+  .hero-note { margin-top: 18px; font-size: 14px; color: var(--ink-faint); }
+  .recognise h2 { max-width: 760px; }
+  .recognise .lede { max-width: 640px; }
+  .see-all { margin-top: 24px; font-weight: 600; }
+  .about-text { flex: 1 1 380px; }
+</style>

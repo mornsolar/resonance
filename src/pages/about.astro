@@ -1,0 +1,57 @@
+---
+import Base from '../layouts/Base.astro';
+import { url } from '../lib/url';
+import { CONTACT_EMAIL, LINKEDIN_URL } from '../lib/config';
+---
+<Base title="About" description="Chernyang Lee: mathematician, former software engineer, and the person behind Resonance.">
+  <section class="section">
+    <div class="read">
+      <div class="about-row intro">
+        <img class="headshot" src={url('/headshot.webp')} alt="Chernyang Lee" width="120" height="120">
+        <div>
+          <p class="eyebrow">About</p>
+          <h1>Hello, I'm Chernyang. <span class="cn" lang="zh">晨暘</span></h1>
+        </div>
+      </div>
+      <p class="lede">I help people build an intentional relationship with technology, so it serves their values rather than competing with them. Not through restriction, but through awareness, agency, and small experiments people can run on their own lives.</p>
+      <p>I spent over a decade as a software engineer, including leading real-time systems, after a PhD in Mathematics. I've always been a problem solver at heart: someone who wants to understand how something actually works, from first principles, before deciding what to build. I know how deliberately technology is engineered to capture attention, because I've been inside the machine that builds it.</p>
+      <p>A career transition gave me the space to ask a different question: not how to make technology faster or smarter, but how to help people stay in charge of their own attention as it does. That question is what I'm building a company, and a body of work, around.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="read">
+      <h2>Why "Resonance"</h2>
+      <p>Most technology competes for your attention. I'd like this to work more like a tuning fork: nothing shouting at you, just something that, when it's struck, makes something in you respond. The feeling I'm aiming for is being understood, not being managed.</p>
+      <p>So there are no pop-ups here, no streaks, and no countdowns. If a story or an experiment helps you put your phone down and do something that matters to you, that counts as the site working, even if you never come back.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="read">
+      <h2>How I work</h2>
+      <p>I test ideas on myself first, usually on ordinary days with my own family, and write up what happened honestly, including the parts that went wrong. Some of what you'll read here is unproven, and I'll say so when it is. I'd rather show you a real experiment in progress than a polished claim I can't back up.</p>
+      <div class="actions">
+        <a class="btn btn-secondary" href={url('/stories/')}>Read the stories</a>
+        <a class="btn btn-secondary" href={url('/reset/')}>Join the one-week reset</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="read">
+      <h2>Get in touch</h2>
+      <p>I'm always glad to hear from people thinking about the same questions, whether you're a parent, an educator, or someone building technology.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href={`mailto:${CONTACT_EMAIL}`}>Email me</a>
+        <a class="btn btn-secondary" href={LINKEDIN_URL} target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .intro { margin-bottom: 28px; }
+  .intro h1 { margin: 0; }
+  .cn { font-size: 0.5em; font-weight: 400; color: var(--ink-faint); }
+</style>
