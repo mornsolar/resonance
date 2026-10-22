@@ -66,6 +66,7 @@ const steps = [
       <p class="lede">Three questions about the last time you picked up your phone without meaning to. It takes about two minutes. Your answers stay on this page; nothing is saved or sent anywhere.</p>
 
       <form class="experiment" data-experiment>
+        <div class="progress" aria-hidden="true"><span></span></div>
         {steps.map((step, index) => (
           <fieldset class="step" data-step tabindex="-1">
             <p class="step-count">{index + 1} of {steps.length}</p>
@@ -129,6 +130,7 @@ const steps = [
       steps.forEach((step, i) => {
         step.hidden = i !== index;
       });
+      form.style.setProperty('--progress', `${((index + 1) / (steps.length + 1)) * 100}%`);
       result.hidden = true;
       if (shouldFocus) steps[index].focus();
     };
@@ -153,6 +155,7 @@ const steps = [
       steps.forEach((step) => {
         step.hidden = true;
       });
+      form.style.setProperty('--progress', '100%');
       result.hidden = false;
       result.focus();
     };

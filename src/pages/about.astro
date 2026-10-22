@@ -1,9 +1,19 @@
 ---
 import Base from '../layouts/Base.astro';
 import { url } from '../lib/url';
-import { CONTACT_EMAIL, LINKEDIN_URL } from '../lib/config';
+import { CONTACT_EMAIL, FOUNDER_NAME, LINKEDIN_URL } from '../lib/config';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: FOUNDER_NAME,
+  description: 'Mathematician and former software engineer exploring how people can build an intentional relationship with technology.',
+  url: new URL(url('/about/'), Astro.site).href,
+  image: new URL(url('/headshot.webp'), Astro.site).href,
+  sameAs: [LINKEDIN_URL],
+};
 ---
-<Base title="About" description="Chernyang Lee: mathematician, former software engineer, and the person behind Resonance.">
+<Base title="About" jsonLd={jsonLd} description="Chernyang Lee: mathematician, former software engineer, and the person behind Resonance.">
   <section class="section">
     <div class="read">
       <div class="about-row intro">

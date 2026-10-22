@@ -1,31 +1,37 @@
 ---
 import Base from '../layouts/Base.astro';
 import StoryCard from '../components/StoryCard.astro';
+import Ripples from '../components/Ripples.astro';
 import { getPublishedStories } from '../lib/stories';
 import { url } from '../lib/url';
 
 const HOME_STORY_COUNT = 3;
-const stories = (await getPublishedStories()).slice(0, HOME_STORY_COUNT);
+const [featured, ...others] = (await getPublishedStories()).slice(0, HOME_STORY_COUNT);
 ---
 <Base>
-  <section class="section hero">
-    <div class="wrap">
-      <p class="eyebrow">Resonance · the art of being present</p>
-      <h1>A little less scrolling.<br>A little more living.</h1>
-      <p class="lede">A place to explore how we can build a wiser relationship with technology, so it serves what we value instead of competing with it.</p>
-      <div class="actions">
-        <a class="btn btn-primary" href={url('/try/')}>Try a 2-minute pause</a>
-        <a class="btn btn-secondary" href={url('/stories/')}>Read the stories</a>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">Resonance · the art of being present</p>
+        <h1><span class="h1-line">A little less scrolling.</span> <span class="h1-line">A little more living.</span></h1>
+        <p class="lede">A place to explore how we can build a wiser relationship with technology, so it serves what we value instead of competing with it.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href={url('/try/')}>Try a 2-minute pause</a>
+          <a class="btn btn-secondary" href={url('/stories/')}>Read the stories</a>
+        </div>
+        <p class="hero-note">No guilt. No streaks. No pressure to give up technology.</p>
       </div>
-      <p class="hero-note">No guilt. No streaks. No pressure to give up technology.</p>
+      <Ripples />
     </div>
   </section>
 
-  <section class="section recognise">
+  <section class="section">
     <div class="wrap">
-      <p class="eyebrow">You might recognise this</p>
-      <h2>You picked up your phone for one thing. Twenty minutes later, you were somewhere else.</h2>
-      <p class="lede">Most of us have been there. Resonance is about what makes those moments happen, and what we can do differently, starting small: a story to recognise yourself in, an experiment to try, and a short note on Sundays.</p>
+      <div class="statement">
+        <p class="eyebrow">You might recognise this</p>
+        <h2>You picked up your phone for one thing. Twenty minutes later, you were somewhere else.</h2>
+        <p class="lede">Most of us have been there. Resonance is about what makes those moments happen, and what we can do differently, starting small: a story to recognise yourself in, an experiment to try, and a short note on Sundays.</p>
+      </div>
     </div>
   </section>
 
@@ -36,8 +42,9 @@ const stories = (await getPublishedStories()).slice(0, HOME_STORY_COUNT);
         <h2>Real days, small experiments</h2>
         <p>Everything here starts with something I've actually tried on my own life, written up honestly, including the parts that didn't go to plan.</p>
       </div>
-      <div class="grid">
-        {stories.map((story) => <StoryCard story={story} />)}
+      <div class="grid grid-stories">
+        {featured && <StoryCard story={featured} featured />}
+        {others.map((story) => <StoryCard story={story} />)}
       </div>
       <p class="see-all"><a href={url('/stories/')}>All stories →</a></p>
     </div>
@@ -53,12 +60,12 @@ const stories = (await getPublishedStories()).slice(0, HOME_STORY_COUNT);
         <article class="card card-sage">
           <h3><a href={url('/try/')}>A 2-minute pause</a></h3>
           <p>Three questions about the last time you picked up your phone without meaning to. No sign-up, and nothing is saved.</p>
-          <a class="more" href={url('/try/')}>Try it →</a>
+          <span class="more" aria-hidden="true">Try it →</span>
         </article>
         <article class="card card-twilight">
           <h3><a href={url('/reset/')}>The one-week reset</a></h3>
           <p>A small pilot: say what you're picking your phone up for and for how long, then lock it away for the same stretch afterwards. I'm looking for a few people to run it with me.</p>
-          <a class="more" href={url('/reset/')}>Find out more →</a>
+          <span class="more" aria-hidden="true">Find out more →</span>
         </article>
       </div>
     </div>
@@ -81,11 +88,20 @@ const stories = (await getPublishedStories()).slice(0, HOME_STORY_COUNT);
 </Base>
 
 <style>
-  .hero { padding-top: clamp(40px, 6vw, 72px); }
-  .hero .lede { max-width: 620px; margin-bottom: 28px; }
+  .hero { padding: clamp(32px, 6vw, 80px) 0 clamp(48px, 7vw, 96px); }
+  .hero-grid { display: grid; gap: 40px; align-items: center; }
+  .hero h1 { font-size: clamp(28px, calc((100vw - 40px) / 10.2), 64px); }
+  .h1-line { display: inline-block; }
+  .hero .lede { max-width: 34em; margin-bottom: 28px; }
   .hero-note { margin-top: 18px; font-size: 14px; color: var(--ink-faint); }
-  .recognise h2 { max-width: 760px; }
-  .recognise .lede { max-width: 640px; }
+  .statement { background: var(--twilight); border-radius: 28px; padding: clamp(28px, 5vw, 64px); }
+  .statement h2 { font-size: clamp(28px, 4.4vw, 46px); max-width: 17em; }
+  .statement .lede { max-width: 36em; margin: 0; color: var(--ink-soft); }
   .see-all { margin-top: 24px; font-weight: 600; }
   .about-text { flex: 1 1 380px; }
+
+  @media (min-width: 900px) {
+    .hero-grid { grid-template-columns: 1.3fr 0.7fr; gap: 56px; }
+    .hero h1 { font-size: clamp(38px, 5.6vw, 64px); }
+  }
 </style>

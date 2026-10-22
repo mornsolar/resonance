@@ -1,18 +1,20 @@
 ---
-import type { Story } from '../lib/stories';
-import { formatDate } from '../lib/stories';
+import { formatDate, readingMinutes, type Story } from '../lib/stories';
 import { url } from '../lib/url';
 
 interface Props {
   story: Story;
+  featured?: boolean;
+  as?: 'h2' | 'h3';
 }
 
-const { story } = Astro.props;
+const { story, featured = false, as: Heading = 'h3' } = Astro.props;
 const href = url(`/stories/${story.id}/`);
+const minutes = readingMinutes(story);
 ---
-<article class="card">
-  <span class="meta">{formatDate(story.data.date)}</span>
-  <h3><a href={href}>{story.data.title}</a></h3>
+<article class:list={['card', { 'card-featured': featured }]}>
+  <span class="meta">{formatDate(story.data.date)} · {minutes} min read</span>
+  <Heading><a href={href}>{story.data.title}</a></Heading>
   <p>{story.data.summary}</p>
-  <a class="more" href={href} aria-label={`Read: ${story.data.title}`}>Read the story →</a>
+  <span class="more" aria-hidden="true">Read the story →</span>
 </article>

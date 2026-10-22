@@ -21,5 +21,8 @@ Astro 7 static site for the founder's intentional-technology venture. Live at ht
 - Contact details, the Formspree endpoint and the booking link live only in `src/lib/config.ts`.
 - Every internal link and asset path goes through `url()` from `src/lib/url.ts`. The site is served under `/resonance` on GitHub Pages but from the root on Vercel; `astro.config.mjs` picks the base path from the `VERCEL` environment variable.
 - Changes go on a branch and a pull request, so Vercel can build a preview URL to check before merging to `main`.
+- Colours come from the tokens at the top of `src/styles/global.css`, with a dark-mode override under `prefers-color-scheme: dark`. Use tokens (`var(--forest)`, `var(--paper-deep)`), never raw hex, so both themes stay in step.
+- Fonts are self-hosted through `@fontsource-variable` (no Google Fonts requests). Motion is optional and must respect `prefers-reduced-motion`.
+- `public/og.png` is the social preview image. If the tagline or brand colours change, regenerate it rather than leaving it stale.
 - Brand rules come from `Mission & Vision/Brand Identity - Resonance.md` in the vault: calm, trusted-friend voice; no pop-ups, streaks, countdowns or urgency tricks.
 - Commits use conventional format (`feat:`, `fix:`, `docs:` and so on).

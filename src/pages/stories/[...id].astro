@@ -1,11 +1,9 @@
 ---
 import { render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
-import { getPublishedStories, formatDate, type Story } from '../../lib/stories';
+import { getPublishedStories, formatDate, readingMinutes, type Story } from '../../lib/stories';
 import { url } from '../../lib/url';
-import { CONTACT_EMAIL } from '../../lib/config';
-
-const WORDS_PER_MINUTE = 220;
+import { CONTACT_EMAIL, FOUNDER_NAME, LINKEDIN_URL } from '../../lib/config';
 
 export async function getStaticPaths() {
   const stories = await getPublishedStories();
@@ -18,10 +16,19 @@ interface Props {
 
 const { story } = Astro.props;
 const { Content } = await render(story);
-const wordCount = (story.body ?? '').split(/\s+/).filter(Boolean).length;
-const minutes = Math.max(1, Math.round(wordCount / WORDS_PER_MINUTE));
+const minutes = readingMinutes(story);
+const storyUrl = new URL(url(`/stories/${story.id}/`), Astro.site).href;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: story.data.title,
+  description: story.data.summary,
+  datePublished: story.data.date.toISOString(),
+  mainEntityOfPage: storyUrl,
+  author: { '@type': 'Person', name: FOUNDER_NAME, sameAs: [LINKEDIN_URL] },
+};
 ---
-<Base title={story.data.title} description={story.data.summary}>
+<Base title={story.data.title} description={story.data.summary} ogType="article" quietCapable jsonLd={jsonLd}>
   <article>
     <header class="story-header">
       <div class="read">
