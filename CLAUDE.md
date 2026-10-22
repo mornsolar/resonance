@@ -15,6 +15,16 @@ Astro 7 static site for the founder's intentional-technology venture. Live at ht
 4. Copy the story text verbatim. Drop the vault wrapper (raw ingredients, transferable lesson, Theory of Change stage, assumption, status) and Obsidian embeds like `![[...]]`.
 5. Privacy check before publishing: no names or images identifying interviewees or other people's children. Check images for handwritten names.
 
+## The phone check-in (`/check/`)
+
+A lead-generation assessment built on the Priestley 10+5 structure: landing page → 15 questions → scored result → Step 1 (two-minute exercise) → Step 2 (one-week reset sign-up or a chat).
+
+- Questions, dimensions and all result copy live in `src/lib/checkin/` (`questions.ts`, `insights.ts`, `journey.ts`). Scoring and routing rules are in `scoring.ts`; the Formspree payload in `submission.ts`. Change copy there, not in the pages.
+- Every rule is unit-tested (`npm test`, Vitest). CI runs the tests before deploying. Update the tests when you change a threshold.
+- Journey state lives only in `sessionStorage` (`store.ts`). Nothing reaches Formspree unless a form is submitted; Step 2 sends the check-in summary only while its "include" box is ticked.
+- Research claims in the copy come from the vault's Research & Trends notes. Never cite the "mere presence / brain drain" effect (it did not replicate) or call anything "brain rot".
+- Band cut-offs (8 and 15) are pilot guesses. Revisit them once real results arrive.
+
 ## Rules
 
 - No invented content. Copy comes from the vault or is approved by the founder; if something is missing, ask rather than write filler.

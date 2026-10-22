@@ -1,0 +1,56 @@
+---
+import Base from '../layouts/Base.astro';
+import { url } from '../lib/url';
+import { CONTACT_EMAIL, FOUNDER_NAME } from '../lib/config';
+
+const UPDATED = '23 October 2026';
+const RETENTION_MONTHS = 12;
+---
+<Base title="How I handle your answers" description="What this site collects, where it goes, how long it is kept, and how to have it deleted.">
+  <section class="section">
+    <div class="read prose-lite">
+      <p class="eyebrow">Privacy</p>
+      <h1>How I handle your answers</h1>
+      <p class="lede">Short version: this site only collects what you type into a form. I use it to reply to you and to learn what helps. I don't sell it, I don't track you, and you can ask me to delete it at any time.</p>
+
+      <h2>Who I am</h2>
+      <p>Resonance is run by me, {FOUNDER_NAME}. If you have any question about your data, email <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</p>
+
+      <h2>What is collected</h2>
+      <ul>
+        <li><strong>The phone check-in:</strong> your answers, your score, and, only if you give them, your first name, your email, and whether you'd like the Sunday Pause.</li>
+        <li><strong>The one-week reset sign-up:</strong> your name, email and the answers on that form. If you come from the check-in, a short summary of your result is included only while the "include my check-in summary" box is ticked.</li>
+        <li><strong>The Sunday Pause sign-up:</strong> your email address.</li>
+        <li><strong>The 2-minute pause on the Try page:</strong> nothing. Your answers there never leave the page.</li>
+      </ul>
+
+      <h2>Where it goes</h2>
+      <p>Forms are delivered by <a href="https://formspree.io/legal/privacy-policy" target="_blank" rel="noopener">Formspree</a>, which emails them to me and keeps a copy in my Formspree account. Formspree is based in the United States. If you book a chat, that goes through Google Calendar's appointment booking.</p>
+
+      <h2>What stays in your browser</h2>
+      <p>While you go through the check-in and its two steps, your answers are kept in your browser tab so the next step can pick up where you left off. They disappear when you close the tab, and the result page has a button to clear them straight away. The Quiet reading setting on stories is remembered in your browser too. This site uses no tracking cookies and no analytics.</p>
+
+      <h2>Why I use it</h2>
+      <ul>
+        <li>To reply to you personally, if you left your email.</li>
+        <li>To run the one-week reset pilot with the people who signed up.</li>
+        <li>To learn what actually helps: I read check-in answers to improve the questions, the scoring and the advice.</li>
+      </ul>
+      <p>I'll only send you the Sunday Pause if you asked for it, and only email you about the reset if you signed up for it.</p>
+
+      <h2>How long I keep it</h2>
+      <p>For as long as the pilot runs, and then for up to {RETENTION_MONTHS} months. After that I delete it, or keep only anonymous totals (for example, "40% started with Notice").</p>
+
+      <h2>Your choices</h2>
+      <p>Email me at any time to see what I hold about you, correct it, or have it deleted. The check-in is for adults aged 18 and over.</p>
+
+      <p class="fine-print">Last updated {UPDATED}. <a href={url('/check/')}>Back to the phone check-in</a>.</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .prose-lite h2 { font-size: clamp(22px, 3vw, 28px); margin-top: 1.6em; }
+  .prose-lite ul { padding-left: 20px; }
+  .prose-lite li { margin-bottom: 0.5em; }
+</style>

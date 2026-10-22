@@ -1,0 +1,59 @@
+---
+import { FORMSPREE_ENDPOINT } from '../lib/config';
+
+interface Props {
+  /** Prefix for field ids, so two forms could share a page without clashing. */
+  idPrefix?: string;
+  /** Marks where the sign-up came from in the Formspree inbox. */
+  source?: string;
+}
+
+const { idPrefix = 'reset', source = 'reset-page' } = Astro.props;
+const id = (name: string): string => `${idPrefix}-${name}`;
+---
+<form
+  class="panel stack"
+  action={FORMSPREE_ENDPOINT}
+  method="POST"
+  data-ajax-form
+  data-reset-form
+  data-success="Thank you, you're in. I'll email you personally within a couple of days."
+>
+  <input type="hidden" name="_subject" value="One-Week Reset: new interest registration">
+  <input type="hidden" name="form" value="one-week-reset">
+  <input type="hidden" name="source" value={source}>
+  <p class="trap" aria-hidden="true"><label>Leave this empty <input type="text" name="_gotcha" tabindex="-1" autocomplete="off"></label></p>
+  <slot />
+  <div class="field">
+    <label for={id('name')}>Name</label>
+    <input type="text" id={id('name')} name="name" required autocomplete="name">
+  </div>
+  <div class="field">
+    <label for={id('email')}>Email</label>
+    <input type="email" id={id('email')} name="email" required autocomplete="email">
+  </div>
+  <fieldset class="field">
+    <legend>This would be for</legend>
+    <div class="choices">
+      <label><input type="radio" name="who_for" value="myself" required> my own phone habits</label>
+      <label><input type="radio" name="who_for" value="a teen I look after"> a teen I look after</label>
+    </div>
+  </fieldset>
+  <div class="field">
+    <label for={id('habit')}>What's the one phone habit you'd most like to change? <span class="hint">Optional</span></label>
+    <textarea id={id('habit')} name="habit_to_change"></textarea>
+  </div>
+  <fieldset class="field">
+    <legend>If this became an ongoing paid offering later, would you expect to pay for it? <span class="hint">Optional, just curious, no commitment either way</span></legend>
+    <div class="choices">
+      <label><input type="radio" name="willing_to_pay" value="yes"> Yes</label>
+      <label><input type="radio" name="willing_to_pay" value="maybe"> Maybe</label>
+      <label><input type="radio" name="willing_to_pay" value="no"> No</label>
+    </div>
+  </fieldset>
+  <div>
+    <button class="btn btn-primary" type="submit">Count me in</button>
+    <p class="form-status" role="status" aria-live="polite"></p>
+    <p class="fine-print">I'll email you directly to arrange things. No spam, and no list beyond this.</p>
+  </div>
+</form>
