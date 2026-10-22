@@ -5,7 +5,7 @@ summary: "A packed lunch rush, a room full of heads bent over phones, and the tw
 reflection: "The next time you're waiting somewhere with your head down, what else could those twenty minutes be for?"
 ---
 
-> 咦?怎麼不是那個阿姨的檔口了?
+> <span lang="zh-Hant">咦?怎麼不是那個阿姨的檔口了?</span>
 >
 > *"Huh — that's not the auntie's stall anymore?"*
 
@@ -31,19 +31,19 @@ Then the honest part: I stopped listening to my parents. They were talking to me
 
 I told my mother I wanted to go and help.
 
-> 別去啦。廚房裡東西那麼熱,萬一你被燙傷了怎麼辦。不要多管閒事 — 人家可能根本不想你幫忙。
+> <span lang="zh-Hant">別去啦。廚房裡東西那麼熱,萬一你被燙傷了怎麼辦。不要多管閒事 — 人家可能根本不想你幫忙。</span>
 >
 > *"Don't. It's hot in there, what if you get burned? Don't meddle — she probably doesn't even want your help."*
 
 * * *
 
-我終於忍不住了. I finally couldn't sit still any longer.
+<span lang="zh-Hant">我終於忍不住了.</span> I finally couldn't sit still any longer.
 
 I walked to the stall. "Auntie — I'm not saying you're slow. I'm just sitting there waiting anyway. What can I do? Can I help serve the others?"
 
 And she laughed at me:
 
-> 那你怎麼不早來?
+> <span lang="zh-Hant">那你怎麼不早來?</span>
 >
 > *"Well — why didn't you come earlier?"*
 

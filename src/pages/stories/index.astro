@@ -3,7 +3,7 @@ import Base from '../../layouts/Base.astro';
 import StoryCard from '../../components/StoryCard.astro';
 import { getPublishedStories } from '../../lib/stories';
 
-const stories = await getPublishedStories();
+const [featured, ...others] = await getPublishedStories();
 ---
 <Base title="Stories" description="Real moments from everyday life with technology and the people we love, each ending with a question to sit with.">
   <section class="section">
@@ -13,8 +13,9 @@ const stories = await getPublishedStories();
         <h1>Stories about what matters</h1>
         <p class="lede">Real moments from my own life with technology and the people I love. Each one ends with a question to sit with, not a list of more things to read.</p>
       </div>
-      <div class="grid">
-        {stories.map((story) => <StoryCard story={story} />)}
+      <div class="grid grid-stories">
+        {featured && <StoryCard story={featured} featured as="h2" />}
+        {others.map((story) => <StoryCard story={story} as="h2" />)}
       </div>
     </div>
   </section>
