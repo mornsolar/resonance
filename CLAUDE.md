@@ -19,6 +19,7 @@ Astro 7 static site for the founder's intentional-technology venture. Live at ht
 
 - No invented content. Copy comes from the vault or is approved by the founder; if something is missing, ask rather than write filler.
 - Contact details, the Formspree endpoint and the booking link live only in `src/lib/config.ts`.
-- Every internal link and asset path goes through `url()` from `src/lib/url.ts`, because the site is served under `/resonance`.
+- Every internal link and asset path goes through `url()` from `src/lib/url.ts`. The site is served under `/resonance` on GitHub Pages but from the root on Vercel; `astro.config.mjs` picks the base path from the `VERCEL` environment variable.
+- Changes go on a branch and a pull request, so Vercel can build a preview URL to check before merging to `main`.
 - Brand rules come from `Mission & Vision/Brand Identity - Resonance.md` in the vault: calm, trusted-friend voice; no pop-ups, streaks, countdowns or urgency tricks.
 - Commits use conventional format (`feat:`, `fix:`, `docs:` and so on).
