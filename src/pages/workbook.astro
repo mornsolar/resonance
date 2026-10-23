@@ -1,0 +1,132 @@
+---
+import Base from '../layouts/Base.astro';
+import { url } from '../lib/url';
+import { FORMSPREE_ENDPOINT } from '../lib/config';
+
+const PLANNED_PRICE = '£15';
+
+const contents = [
+  ['A letter, and the honest theory', 'Why minutes were never the point, what the research does and doesn\'t say, and what this workbook isn\'t.'],
+  ['Your starting point', 'Three quick self-scores, scored again on Day 28, so you can see whether anything actually moved.'],
+  ['28 days, one page each', 'Notice, then choose before you start, then choose where you stop, then bring someone in. Every day has a smaller version for awkward days.'],
+  ['When you miss a day', 'Don\'t catch up. Don\'t start again. Just do today.'],
+  ['Five extras', 'A seven-day quickstart, declaration cards, a fridge card, openers for a shared phone-free moment, and a notification audit.'],
+];
+---
+<Base hidePause title="The Choice-Point Month: coming soon" description="A 28-day printable workbook for using your phone on purpose. Not less screen time. More of your own choices. Register your interest.">
+  <section class="section">
+    <div class="wrap hero">
+      <div class="hero-text">
+        <p class="eyebrow">Coming soon · a printable workbook</p>
+        <h1>The <span class="nowrap">Choice-Point</span> Month</h1>
+        <p class="lede">A 28-day workbook for using your phone on purpose. Not less screen time. More of your own choices.</p>
+        <p>One small experiment a day, written in and ticked off. No app, no streaks, no counting your minutes.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="#interest">Tell me when it's ready</a>
+          <a class="btn btn-secondary" href="#inside">Look inside</a>
+        </div>
+      </div>
+      <figure class="cover">
+        <img src={url('/workbook/p01-cover.webp')} width="800" height="1135" alt="Cover of The Choice-Point Month, a 28-day workbook by Chernyang Lee." fetchpriority="high">
+      </figure>
+    </div>
+  </section>
+
+  <section class="section" id="inside">
+    <div class="read">
+      <h2>What's inside</h2>
+      <dl class="contents">
+        {contents.map(([term, detail]) => (
+          <div><dt>{term}</dt><dd>{detail}</dd></div>
+        ))}
+      </dl>
+      <p class="fine-print">56 A5 pages. Print it, or write in it on a tablet.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap pages">
+      <figure>
+        <img src={url('/workbook/p23-day-11.webp')} width="800" height="1135" loading="lazy" alt="Day 11, The Ten-Video Rule: decide where you'll stop before the first swipe, not after the fortieth. With a why, four steps for today, an awkward-day version, a tick-box and lines to write on.">
+        <figcaption>A real day page: Day 11, the Ten-Video Rule.</figcaption>
+      </figure>
+      <figure>
+        <img src={url('/workbook/p45-keep-three.webp')} width="800" height="1135" loading="lazy" alt="The Keep Three card: space to write the three practices you keep, filled in on Day 28.">
+        <figcaption>Day 28: the three practices you'll keep.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="read">
+      <h2>Why it isn't on sale yet</h2>
+      <div class="note-box">
+        <p>The workbook is written. What I don't know yet is whether enough people want it to make it worth selling properly. So before I set up a shop, I'm asking. If you'd like it, leave your email below. I'll write to you once, when it's ready, and that's all.</p>
+      </div>
+      <p>I plan to price it at {PLANNED_PRICE}, a one-off payment with no subscription. Not sure yet? The <a href={url('/check/')}>free phone check-in</a> takes about four minutes and shows where you're choosing already.</p>
+    </div>
+  </section>
+
+  <section class="section" id="interest">
+    <div class="read">
+      <h2>Register your interest</h2>
+      <form
+        class="panel stack"
+        action={FORMSPREE_ENDPOINT}
+        method="POST"
+        data-ajax-form
+        data-success="Thank you. I'll email you once, when the workbook is ready."
+      >
+        <input type="hidden" name="_subject" value="Choice-Point Month: new interest">
+        <input type="hidden" name="form" value="choice-point-month">
+        <input type="hidden" name="source" value="workbook-page">
+        <p class="trap" aria-hidden="true"><label>Leave this empty <input type="text" name="_gotcha" tabindex="-1" autocomplete="off"></label></p>
+        <div class="field">
+          <label for="wb-email">Email</label>
+          <input type="email" id="wb-email" name="email" required autocomplete="email">
+        </div>
+        <div class="field">
+          <label for="wb-name">First name <span class="hint">Optional</span></label>
+          <input type="text" id="wb-name" name="name" autocomplete="given-name">
+        </div>
+        <fieldset class="field">
+          <legend>Would you buy it at {PLANNED_PRICE}? <span class="hint">Optional, and honest answers help most</span></legend>
+          <div class="choices">
+            <label><input type="radio" name="would_buy" value="yes"> Yes</label>
+            <label><input type="radio" name="would_buy" value="maybe"> Maybe</label>
+            <label><input type="radio" name="would_buy" value="no"> Not at that price</label>
+          </div>
+        </fieldset>
+        <div class="field">
+          <label for="wb-wish">What would make it worth having for you? <span class="hint">Optional</span></label>
+          <textarea id="wb-wish" name="wish"></textarea>
+        </div>
+        <div>
+          <button class="btn btn-primary" type="submit">Tell me when it's ready</button>
+          <p class="form-status" role="status" aria-live="polite"></p>
+          <p class="fine-print">One email when it's ready. No list beyond that. See the <a href={url('/privacy/')}>privacy note</a>.</p>
+        </div>
+      </form>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero { display: grid; gap: 40px; align-items: center; }
+  .hero h1 { margin-top: 6px; }
+  .nowrap { white-space: nowrap; }
+  .cover { margin: 0; justify-self: center; max-width: 340px; }
+  .cover img, .pages img {
+    display: block; width: 100%; height: auto;
+    border-radius: 10px; box-shadow: var(--shadow);
+  }
+  .contents { display: grid; gap: 18px; margin: 0 0 18px; }
+  .contents dt { font-family: var(--font-serif); font-weight: 600; font-size: 1.1rem; color: var(--ink); }
+  .contents dd { margin: 4px 0 0; color: var(--ink-soft); }
+  .pages { display: grid; gap: 32px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); max-width: 820px; }
+  .pages figure { margin: 0; }
+  .pages figcaption { margin-top: 12px; font-size: 14px; color: var(--ink-faint); text-align: center; }
+  @media (min-width: 820px) {
+    .hero { grid-template-columns: 1.2fr 1fr; }
+  }
+</style>

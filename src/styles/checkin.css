@@ -88,3 +88,5 @@ html:not(.js) .checkin .step + .step { margin-top: 36px; }
   .journey, .result-tools, .next-steps .btn, .send-status { display: none !important; }
   .score-card, .insight, .next-card { break-inside: avoid; background: #fff; border: 1px solid #ccc; }
 }
+
+.workbook-aside { margin: 20px 0 0; font-size: 15px; color: var(--ink-soft); }
