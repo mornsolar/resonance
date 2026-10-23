@@ -2,60 +2,14 @@
 import Base from '../layouts/Base.astro';
 import { url } from '../lib/url';
 import { CONTACT_EMAIL } from '../lib/config';
+import { FEELINGS, MOMENT_QUESTIONS, ONE_THING_TO_TRY, OUTCOMES, TRIGGERS } from '../lib/moments';
 
-const triggers = [
-  {
-    value: 'automatic',
-    label: 'I did it automatically',
-    reflection:
-      "If it happened automatically, there wasn't really a decision to make. The habit got there before you did. That isn't a failure of willpower; it's simply what habits do.",
-  },
-  {
-    value: 'bored',
-    label: 'I was bored or waiting',
-    reflection:
-      "Waiting and boredom are when the phone is easiest to reach for. It fills the gap before we've even noticed there is one.",
-  },
-  {
-    value: 'escape',
-    label: 'I wanted to get away from an uncomfortable feeling',
-    reflection:
-      "Reaching for the phone to step away from a feeling is very human. It works for a moment, which is exactly why it's worth noticing.",
-  },
-  {
-    value: 'notification',
-    label: 'A notification caught my attention',
-    reflection:
-      "A notification is someone else's decision about when you pick up your phone. Noticing that is already taking a little of the decision back.",
-  },
-];
+const triggers = TRIGGERS;
 
 const steps = [
-  {
-    name: 'trigger',
-    question: 'Think about the last time you opened your phone without planning to. What happened just before?',
-    options: triggers.map(({ value, label }) => ({ value, label })),
-  },
-  {
-    name: 'outcome',
-    question: 'What did you end up doing on it?',
-    options: [
-      { value: 'intended', label: 'What I meant to do' },
-      { value: 'elsewhere', label: 'Something else entirely' },
-      { value: 'unsure', label: "I honestly can't remember" },
-      { value: 'both', label: 'A bit of both' },
-    ],
-  },
-  {
-    name: 'feeling',
-    question: 'When you put it down, how did you feel?',
-    options: [
-      { value: 'fine', label: 'Fine' },
-      { value: 'flat', label: 'A bit flat' },
-      { value: 'annoyed', label: 'Annoyed with myself' },
-      { value: 'unnoticed', label: "I don't think I noticed" },
-    ],
-  },
+  { name: 'trigger', question: MOMENT_QUESTIONS.trigger, options: TRIGGERS },
+  { name: 'outcome', question: MOMENT_QUESTIONS.outcome, options: OUTCOMES },
+  { name: 'feeling', question: MOMENT_QUESTIONS.feeling, options: FEELINGS },
 ];
 ---
 <Base title="A moment of choice" description="Three questions about the last time you picked up your phone without meaning to. Two minutes, nothing saved.">
@@ -90,7 +44,7 @@ const steps = [
           {triggers.map((trigger) => <p data-reflection={trigger.value}>{trigger.reflection}</p>)}
           <div class="try-this">
             <p class="eyebrow">One thing to try</p>
-            <p>Next time you reach for your phone, pause for one breath and say, out loud or in your head, what you're picking it up for and for how long. That's all. No app, no tracking.</p>
+            <p>{ONE_THING_TO_TRY}</p>
           </div>
           <p>You can close this page now. Really. If it changes anything, I'd love to hear about it.</p>
           <div class="actions">
@@ -102,6 +56,11 @@ const steps = [
       </form>
 
       <p class="fine-print after">Notice what's missing: no score, no streak, no reason to come back unless you want to.</p>
+
+      <aside class="panel deeper" aria-labelledby="deeper-title">
+        <p class="eyebrow" id="deeper-title">Want a fuller picture?</p>
+        <p>The <a href={url('/check/')}>phone check-in</a> is 15 questions about how you actually use your phone. You get a personal result and two next steps. Unlike this page, it does send your answers to me, and it says so up front.</p>
+      </aside>
     </div>
   </section>
 </Base>
@@ -112,6 +71,8 @@ const steps = [
   .result h2 { font-size: clamp(24px, 3vw, 30px); }
   .restart-row { margin: 16px 0 0; }
   .after { margin-top: 20px; }
+  .deeper { margin-top: 40px; }
+  .deeper p:last-child { margin: 0; }
   html:not(.js) [data-next],
   html:not(.js) [data-restart],
   html:not(.js) [data-noted] { display: none; }

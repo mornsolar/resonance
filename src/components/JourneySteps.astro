@@ -1,0 +1,31 @@
+---
+export type JourneyStage = 'checkin' | 'result' | 'step1' | 'step2';
+
+interface Props {
+  current: JourneyStage;
+}
+
+const { current } = Astro.props;
+
+const stages: readonly { id: JourneyStage; label: string }[] = [
+  { id: 'checkin', label: 'Check-in' },
+  { id: 'result', label: 'Your result' },
+  { id: 'step1', label: 'Step 1' },
+  { id: 'step2', label: 'Step 2' },
+];
+const currentIndex = stages.findIndex((stage) => stage.id === current);
+---
+<nav class="journey" aria-label="Your check-in journey" data-journey>
+  <ol>
+    {stages.map((stage, index) => (
+      <li
+        data-stage={stage.id}
+        class:list={{ done: index < currentIndex }}
+        aria-current={index === currentIndex ? 'step' : undefined}
+      >
+        <span class="journey-dot" aria-hidden="true">{index + 1}</span>
+        <span class="journey-label">{stage.label}</span>
+      </li>
+    ))}
+  </ol>
+</nav>

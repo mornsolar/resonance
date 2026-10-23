@@ -1,0 +1,165 @@
+---
+import Base from '../../layouts/Base.astro';
+import { url } from '../../lib/url';
+import { DIMENSIONS, TOTAL_QUESTIONS } from '../../lib/checkin/questions';
+import '../../styles/checkin.css';
+
+const ESTIMATED_MINUTES = 4;
+const startHref = url('/check/start/');
+
+const exampleBars = [
+  { name: 'Notice', fill: 67 },
+  { name: 'Choose', fill: 38 },
+  { name: 'Belong', fill: 50 },
+];
+
+const sources = [
+  {
+    label: 'Pew Research Center (2026): about half of US adults say they spend too much time on their phone',
+    href: 'https://www.pewresearch.org/short-reads/2026/09/01/about-half-of-americans-say-they-spend-too-much-time-on-their-smartphone/',
+  },
+  {
+    label: 'Orben & Przybylski (2019), Nature Human Behaviour: technology use and adolescent wellbeing',
+    href: 'https://www.oii.ox.ac.uk/news-events/technology-use-explains-at-most-0-4-of-adolescent-wellbeing/',
+  },
+  {
+    label: 'Chiossi et al. (2023), CHI: short-form videos and remembering your intentions',
+    href: 'https://dl.acm.org/doi/10.1145/3544548.3580778',
+  },
+  {
+    label: 'Barton & Smyth (2025), Memory: the replication, including the ten-swipe cap',
+    href: 'https://www.tandfonline.com/doi/10.1080/09658211.2025.2521076',
+  },
+];
+---
+<Base title="The phone check-in" description={`${TOTAL_QUESTIONS} short questions about how you actually use your phone, not how long. A free pilot: get a personal result and two next steps straight away.`}>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow">The phone check-in · a free pilot</p>
+        <h1>Tried to cut back on your phone, and it didn't stick?</h1>
+        <p class="lede">Answer {TOTAL_QUESTIONS} short questions about how you actually use your phone, not how long. See where your choices slip, and leave with one thing to try today.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href={startHref}>Start the free check-in</a>
+        </div>
+        <p class="hero-note">{TOTAL_QUESTIONS} questions · about {ESTIMATED_MINUTES} minutes · your result straight away · for adults (18+)</p>
+      </div>
+
+      <figure class="example" aria-label="An example of what a result looks like">
+        <p class="example-tag">Example result</p>
+        <p class="example-score"><span>9</span>/20</p>
+        <p class="example-band">Choosing some of the time</p>
+        <ul>
+          {exampleBars.map((bar) => (
+            <li>
+              <span>{bar.name}</span>
+              <span class="bar"><span style={`--fill: ${bar.fill}%`}></span></span>
+            </li>
+          ))}
+        </ul>
+        <figcaption>Your biggest opportunity: Choose. Before your next five pick-ups, say in your head what it's for…</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">What it looks at</p>
+        <h2>Three areas, none of them measured in minutes</h2>
+        <p>Ten of the questions are about small, specific things you do or don't do. They add up to a score out of 20, split across three areas:</p>
+      </div>
+      <div class="grid">
+        {DIMENSIONS.map((dimension, index) => (
+          <article class:list={['card', index === 0 && 'card-sage', index === 2 && 'card-twilight']}>
+            <h3>{dimension.name}</h3>
+            <p>{dimension.summary}</p>
+          </article>
+        ))}
+      </div>
+      <p class="after-grid">The last five questions ask about your situation, what you want to change, and what has got in the way. They aren't scored. They shape the advice you get.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="read">
+      <p class="eyebrow">Why not count hours?</p>
+      <h2>Because hours turn out to say surprisingly little</h2>
+      <p>About half of US adults say they spend too much time on their phone, and of those who tried to cut back in the past year, only around a quarter said it went very well. Most "use your phone less" advice is about the number of minutes. The research points somewhere more useful.</p>
+      <p>In one of the most careful large studies, of hundreds of thousands of young people, how much they used technology explained at most 0.4% of the differences in their wellbeing. What seems to matter more is whether you chose it. In small lab experiments, unlimited swiping through short videos made people worse at remembering plans they had made earlier. Swiping capped at ten videos didn't.</p>
+      <p>So this check-in asks about choice points: noticing, deciding, and the people around you. The swiping studies are small and short-term, and I'll say that wherever I lean on them.</p>
+      <details class="sources">
+        <summary>Sources</summary>
+        <ul>
+          {sources.map((source) => <li><a href={source.href} target="_blank" rel="noopener">{source.label}</a></li>)}
+        </ul>
+      </details>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">What you get</p>
+        <h2>A result you can use, even if you never come back</h2>
+      </div>
+      <ol class="steps get-list">
+        <li><p><strong>Your score and what it means.</strong> Out of 20, with how you're doing in each of the three areas.</p></li>
+        <li><p><strong>Three insights from your own answers.</strong> What's already working, where your biggest opportunity is, and a note on what has been getting in the way.</p></li>
+        <li><p><strong>Step 1: a two-minute exercise</strong> aimed at your lowest area, which you can do straight away.</p></li>
+        <li><p><strong>Step 2: an invitation, if it fits.</strong> I'm running a small one-week reset pilot. Your result says honestly whether it suits you or not.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap about-row">
+      <img class="headshot" src={url('/headshot.webp')} alt="Chernyang Lee" width="120" height="120" loading="lazy">
+      <div class="about-text">
+        <p class="eyebrow">Who's behind this</p>
+        <h2>Made by Chernyang, and honest about being new</h2>
+        <p>I'm a mathematician who spent over a decade building software. These days I'm asking a different question: as technology becomes smarter, how can we become wiser humans? I test every idea on myself first, and share what I find, including what doesn't work.</p>
+        <p class="note-box">This check-in is brand new. There are no testimonials yet, because you'd be among the first to take it. The score is a mirror to reflect with, not a clinical or validated measure.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="read final">
+      <h2>Ready when you are</h2>
+      <p>For adults. If you're a parent, the questions are about your own phone. That's deliberate: it's the one you can change today.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href={startHref}>Start the free check-in</a>
+      </div>
+      <p class="fine-print">Your answers are sent to me so I can learn what actually helps people. Your name and email are optional. <a href={url('/privacy/')}>How I handle your answers</a>.</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero { padding: clamp(32px, 6vw, 80px) 0 clamp(48px, 7vw, 96px); }
+  .hero-grid { display: grid; gap: 40px; align-items: center; }
+  .hero h1 { font-size: clamp(34px, 5.4vw, 58px); }
+  .hero .lede { max-width: 34em; margin-bottom: 28px; }
+  .hero-note { margin-top: 18px; font-size: 14px; color: var(--ink-faint); }
+  @media (min-width: 900px) { .hero-grid { grid-template-columns: 1.25fr 0.75fr; gap: 56px; } }
+
+  .example { margin: 0; background: var(--paper-deep); border: 1px solid var(--line); border-radius: 24px; padding: 26px; box-shadow: var(--shadow); }
+  .example-tag { display: inline-block; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-faint); border: 1px solid var(--line); border-radius: 999px; padding: 2px 10px; margin: 0 0 14px; }
+  .example-score { font-family: var(--font-serif); font-size: 44px; font-weight: 600; margin: 0; line-height: 1; }
+  .example-score span { color: var(--forest); }
+  .example-band { font-weight: 600; margin: 6px 0 18px; }
+  .example ul { list-style: none; padding: 0; margin: 0 0 16px; display: grid; gap: 10px; }
+  .example li { display: grid; grid-template-columns: 64px 1fr; align-items: center; gap: 10px; font-size: 14px; color: var(--ink-soft); }
+  .example figcaption { font-size: 14px; color: var(--ink-soft); border-top: 1px solid var(--line); padding-top: 14px; }
+
+  .after-grid { margin-top: 24px; max-width: 40em; color: var(--ink-soft); }
+  .sources { margin-top: 20px; font-size: 14.5px; }
+  .sources summary { cursor: pointer; font-weight: 600; color: var(--forest); min-height: 44px; display: inline-flex; align-items: center; }
+  .sources ul { padding-left: 20px; }
+  .get-list { max-width: 44em; }
+  .get-list p { margin: 0; }
+  .about-text { flex: 1 1 380px; }
+  .final { text-align: left; }
+  .final .fine-print { margin-top: 18px; }
+</style>

@@ -57,6 +57,12 @@ const [featured, ...others] = (await getPublishedStories()).slice(0, HOME_STORY_
         <h2>Something you can do today</h2>
       </div>
       <div class="grid">
+        <article class="card card-featured">
+          <p class="eyebrow">New · a free pilot</p>
+          <h3><a href={url('/check/')}>The phone check-in</a></h3>
+          <p>15 short questions about how you actually use your phone, not how long. Get a personal result, then two next steps aimed at where your choices slip most.</p>
+          <span class="more" aria-hidden="true">Take the check-in →</span>
+        </article>
         <article class="card card-sage">
           <h3><a href={url('/try/')}>A 2-minute pause</a></h3>
           <p>Three questions about the last time you picked up your phone without meaning to. No sign-up, and nothing is saved.</p>

@@ -1,0 +1,77 @@
+---
+import Base from '../../layouts/Base.astro';
+import JourneySteps from '../../components/JourneySteps.astro';
+import ResetForm from '../../components/ResetForm.astro';
+import { url } from '../../lib/url';
+import { BOOKING_URL } from '../../lib/config';
+import '../../styles/checkin.css';
+---
+<Base title="Step 2: the one-week reset" description="If it fits, run a structured one-week phone reset alongside me, or talk it through first.">
+  <section class="section">
+    <div class="read">
+      <JourneySteps current="step2" />
+
+      <header class="checkin-head">
+        <p class="eyebrow">Step 2 · <span data-eyebrow>if you want to go further</span></p>
+        <h1 data-heading>The one-week reset</h1>
+        <p class="lede" data-body>A structured week of saying what you'll use your phone for before you pick it up, then putting it away for the same stretch afterwards. I'm running it myself, and inviting a few people to run it alongside me.</p>
+        <ul class="reasons" data-reasons hidden></ul>
+      </header>
+
+      <div class="summary-card" data-summary hidden>
+        <p class="eyebrow">Where you've got to</p>
+        <dl>
+          <dt>Your score</dt><dd data-sum-score></dd>
+          <dt>Start with</dt><dd data-sum-focus></dd>
+          <dt>Step 1</dt><dd data-sum-step1>Not done yet. <a href={url('/check/step-1/')}>It takes two minutes</a>.</dd>
+        </dl>
+      </div>
+
+      <h2>What the week involves</h2>
+      <ol class="steps">
+        <li><p>Before each time you pick up your phone, say why you need it, which app, and for how long.</p></li>
+        <li><p>Use it freely for that window. When it closes, the phone goes away for the same length of time. No renegotiating.</p></li>
+        <li><p>Jot a few lines a day, then tell me honestly afterwards what changed, what didn't, and whether it stuck.</p></li>
+      </ol>
+      <p class="note-box spaced">An honest experiment, not a product. I haven't yet run the full week with other people, so whether the change lasts once the structure is gone is genuinely the open question. It's free, and the group is small so I can pay attention to each person's week. <a href={url('/reset/')}>Full details of the reset</a>.</p>
+
+      <div class="join" data-join>
+        <div class="panel booking" data-booking>
+          <p>Prefer to talk it through first? On the call I'll ask about your past phone habits, then answer any questions about the week.</p>
+          <a class="btn btn-secondary" href={BOOKING_URL} target="_blank" rel="noopener">Book a 15-minute chat →</a>
+        </div>
+
+        <div class="join-form">
+          <h2 id="join">Register your interest</h2>
+          <ResetForm idPrefix="step2" source="check-in step 2">
+            <label class="check-row include-row" data-include-row hidden>
+              <input type="checkbox" data-include checked>
+              <span>Include my check-in summary (score, where to start, and my step 1 notes), so I don't have to explain it again.</span>
+            </label>
+            <input type="hidden" name="checkin_score" data-context disabled>
+            <input type="hidden" name="checkin_focus" data-context disabled>
+            <input type="hidden" name="checkin_situation" data-context disabled>
+            <input type="hidden" name="checkin_step1" data-context disabled>
+          </ResetForm>
+        </div>
+      </div>
+
+      <p class="fine-print spaced">Not for you right now? That's a good answer too. The Sunday Pause below is a quieter way to keep going.</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .spaced { margin-top: 22px; }
+  .join { display: flex; flex-direction: column; gap: 28px; margin-top: 48px; }
+  .join.booking-first .booking { order: -1; }
+  .join .booking { order: 1; }
+  .booking { display: flex; flex-direction: column; gap: 14px; align-items: flex-start; }
+  .booking p { margin: 0; color: var(--ink-soft); }
+</style>
+
+<script>
+  import { setUpStepTwo } from '../../scripts/checkin-step2';
+
+  setUpStepTwo(document);
+</script>

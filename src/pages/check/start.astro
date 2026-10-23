@@ -1,0 +1,202 @@
+---
+import Base from '../../layouts/Base.astro';
+import JourneySteps from '../../components/JourneySteps.astro';
+import { url } from '../../lib/url';
+import { FORMSPREE_ENDPOINT } from '../../lib/config';
+import { CONTEXT_QUESTIONS, DIMENSIONS, SCORED_QUESTIONS, TOTAL_QUESTIONS, dimensionById } from '../../lib/checkin/questions';
+import '../../styles/checkin.css';
+
+const GAUGE_PATH = 'M 16 104 A 84 84 0 0 1 184 104';
+---
+<Base hidePause title="Take the phone check-in" description={`${TOTAL_QUESTIONS} short questions about how you actually use your phone. Your result appears straight away.`}>
+  <section class="section">
+    <div class="read">
+      <JourneySteps current="checkin" />
+
+      <div data-checkin-area>
+        <header class="checkin-head">
+          <p class="eyebrow">The phone check-in</p>
+          <h1>How are you and your phone getting on?</h1>
+          <p class="lede">{TOTAL_QUESTIONS} short questions. Answer for a normal recent week, not your best or worst one. There are no wrong answers.</p>
+        </header>
+
+        <form class="experiment checkin" action={FORMSPREE_ENDPOINT} method="POST" data-checkin>
+          <input type="hidden" name="_subject" value="Phone check-in (submitted without JavaScript)">
+          <input type="hidden" name="form" value="phone-check-in">
+          <p class="trap" aria-hidden="true"><label>Leave this empty <input type="text" name="_gotcha" tabindex="-1" autocomplete="off"></label></p>
+          <div class="progress" aria-hidden="true"><span></span></div>
+          <p class="step-count" data-count aria-live="polite"></p>
+
+          <fieldset class="step" data-step data-kind="intro" tabindex="-1">
+            <legend>Before you start</legend>
+            <p>Your answers are sent to me so I can learn what actually helps people. Leaving your name and email at the end is optional. <a href={url('/privacy/')} target="_blank" rel="noopener">How I handle your answers</a>.</p>
+            <label class="check-row">
+              <input type="checkbox" name="adult" value="yes" required>
+              <span>I'm 18 or over</span>
+            </label>
+            <p class="fine-print">Under 18? The <a href={url('/try/')}>2-minute pause</a> is for everyone and saves nothing.</p>
+            <p class="form-status" role="status" aria-live="polite"></p>
+            <div class="step-nav">
+              <button type="button" class="btn btn-primary" data-next>Start</button>
+            </div>
+          </fieldset>
+
+          {SCORED_QUESTIONS.map((question) => (
+            <fieldset class="step" data-step data-kind="question" data-required="choice" tabindex="-1">
+              <p class="step-dimension">{dimensionById(question.dimension)?.name}</p>
+              <legend>{question.prompt}</legend>
+              <div class="option-list">
+                {question.options.map((option) => (
+                  <label>
+                    <input type="radio" name={question.id} value={option.value} required>
+                    <span>{option.label}</span>
+                  </label>
+                ))}
+              </div>
+              <p class="form-status" role="status" aria-live="polite"></p>
+              <div class="step-nav">
+                <button type="button" class="btn btn-primary" data-next>Continue</button>
+                <button type="button" class="btn-quiet" data-back>Back</button>
+              </div>
+            </fieldset>
+          ))}
+
+          {CONTEXT_QUESTIONS.map((question) => (
+            <fieldset class="step" data-step data-kind="question" data-required={question.kind === 'choice' ? 'choice' : undefined} tabindex="-1">
+              <p class="step-dimension">About you</p>
+              {question.kind === 'choice' ? (
+                <>
+                  <legend>{question.prompt}</legend>
+                  <div class="option-list">
+                    {question.options.map((option) => (
+                      <label>
+                        <input type="radio" name={question.id} value={option.value} required>
+                        <span>{option.label}</span>
+                      </label>
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <>
+                  <legend><label for={`q-${question.id}`}>{question.prompt}</label></legend>
+                  <p class="hint">{question.hint}</p>
+                  <textarea id={`q-${question.id}`} name={question.id} maxlength="2000"></textarea>
+                </>
+              )}
+              <p class="form-status" role="status" aria-live="polite"></p>
+              <div class="step-nav">
+                <button type="button" class="btn btn-primary" data-next>Continue</button>
+                <button type="button" class="btn-quiet" data-back>Back</button>
+              </div>
+            </fieldset>
+          ))}
+
+          <fieldset class="step" data-step data-kind="contact" tabindex="-1">
+            <legend>Last thing: would you like me to follow up?</legend>
+            <p>Completely optional. Leave these blank and you'll still see your full result. If you add your email, I'll write to you personally, not through an automated sequence.</p>
+            <div class="contact-grid">
+              <div class="field">
+                <label for="checkin-name">First name <span class="hint">Optional</span></label>
+                <input type="text" id="checkin-name" name="name" autocomplete="given-name" maxlength="200">
+              </div>
+              <div class="field">
+                <label for="checkin-email">Email <span class="hint">Optional</span></label>
+                <input type="email" id="checkin-email" name="email" autocomplete="email" maxlength="200">
+              </div>
+              <label class="check-row">
+                <input type="checkbox" name="sunday_pause" value="yes">
+                <span>Also send me the Sunday Pause, a short weekly email. Unsubscribe any time.</span>
+              </label>
+            </div>
+            <p class="form-status" role="status" aria-live="polite"></p>
+            <div class="step-nav">
+              <button type="submit" class="btn btn-primary" data-finish>See my result</button>
+              <button type="button" class="btn-quiet" data-back>Back</button>
+            </div>
+            <p class="no-js-note">Without JavaScript, your answers will still reach me, but your result can't be shown on this page. I'll email it to you if you leave your address.</p>
+          </fieldset>
+        </form>
+      </div>
+
+      <section class="result-section" id="result" data-result hidden tabindex="-1" aria-labelledby="result-title">
+        <p class="eyebrow">Your result</p>
+        <h1 id="result-title" class="visually-hidden">Your phone check-in result</h1>
+
+        <div class="score-card">
+          <svg class="gauge" viewBox="0 0 200 120" role="img" aria-labelledby="gauge-label">
+            <title id="gauge-label" data-gauge-label>Your score</title>
+            <path class="gauge-track" d={GAUGE_PATH} fill="none" stroke-width="16" stroke-linecap="round" pathLength="100" />
+            <path class="gauge-fill" d={GAUGE_PATH} fill="none" stroke-width="16" stroke-linecap="round" pathLength="100" stroke-dasharray="0 100" data-gauge-fill />
+            <text class="gauge-number" x="100" y="96" text-anchor="middle" data-total>0</text>
+            <text class="gauge-max" x="100" y="116" text-anchor="middle">out of 20</text>
+          </svg>
+          <div>
+            <h2 data-band-label></h2>
+            <p data-band-summary></p>
+          </div>
+        </div>
+
+        <ul class="dimension-list">
+          {DIMENSIONS.map((dimension) => (
+            <li class="dimension-row" data-dimension-row={dimension.id}>
+              <div class="dimension-top">
+                <span class="dimension-name">{dimension.name}</span>
+                <span class="dimension-value" data-dimension-value></span>
+              </div>
+              <span class="bar" aria-hidden="true"><span></span></span>
+              <p class="dimension-summary">{dimension.summary}</p>
+            </li>
+          ))}
+        </ul>
+
+        <div class="insights">
+          {[0, 1, 2].map(() => (
+            <article class="insight" data-insight>
+              <h3></h3>
+              <p></p>
+            </article>
+          ))}
+        </div>
+
+        <div class="next-steps">
+          <h2>Your next two steps</h2>
+          <ol class="next-list">
+            <li class="next-card is-suggested">
+              <p class="eyebrow">Step 1 · about 2 minutes</p>
+              <h3 data-step1-title></h3>
+              <p data-step1-lede></p>
+              <a class="btn btn-primary" href={url('/check/step-1/')} data-step1-link>Start step 1</a>
+            </li>
+            <li class="next-card" data-step2-card>
+              <p class="eyebrow">Step 2 · <span data-step2-eyebrow></span></p>
+              <h3 data-step2-heading></h3>
+              <p data-step2-body></p>
+              <a class="btn btn-secondary" href={url('/check/step-2/')}>See step 2</a>
+            </li>
+          </ol>
+        </div>
+
+        <div class="note-box score-note">
+          <p><strong>What this score is, and isn't.</strong> It reflects what you told me about ten everyday practices. It isn't a clinical or validated measure, and it says nothing about how many hours you spend on your phone. The cut-offs between the three bands are my first guess, and I'll adjust them as more people take it.</p>
+        </div>
+
+        <p class="send-status" data-send-status role="status" aria-live="polite"></p>
+
+        <div class="result-tools">
+          <button type="button" class="btn btn-secondary" data-print>Save or print my result</button>
+          <button type="button" class="btn-quiet" data-restart>Start again</button>
+          <button type="button" class="btn-quiet" data-forget>Clear my answers from this browser</button>
+        </div>
+      </section>
+    </div>
+  </section>
+</Base>
+
+<script>
+  import { setUpCheckin } from '../../scripts/checkin';
+
+  const form = document.querySelector<HTMLFormElement>('[data-checkin]');
+  const result = document.querySelector<HTMLElement>('[data-result]');
+  const area = document.querySelector<HTMLElement>('[data-checkin-area]');
+  if (form && result && area) setUpCheckin({ form, result, area });
+</script>

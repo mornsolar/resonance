@@ -1,0 +1,141 @@
+---
+import Base from '../../layouts/Base.astro';
+import JourneySteps from '../../components/JourneySteps.astro';
+import { url } from '../../lib/url';
+import { STEP_ONE } from '../../lib/checkin/journey';
+import { FEELINGS, MOMENT_QUESTIONS, ONE_THING_TO_TRY, OUTCOMES, TRIGGERS } from '../../lib/moments';
+import '../../styles/checkin.css';
+
+const MINUTES = [2, 5, 10, 20, 30];
+const momentGroups = [
+  { name: 'trigger', question: MOMENT_QUESTIONS.trigger, options: TRIGGERS },
+  { name: 'outcome', question: MOMENT_QUESTIONS.outcome, options: OUTCOMES },
+  { name: 'feeling', question: MOMENT_QUESTIONS.feeling, options: FEELINGS },
+];
+const exercises = Object.entries(STEP_ONE);
+---
+<Base hidePause title="Step 1: a two-minute exercise" description="A short exercise aimed at the area your phone check-in suggested starting with.">
+  <section class="section">
+    <div class="read">
+      <JourneySteps current="step1" />
+
+      <header class="checkin-head">
+        <p class="eyebrow">Step 1 · about 2 minutes</p>
+        <h1 data-title>{STEP_ONE.notice.title}</h1>
+        <p class="lede" data-lede>{STEP_ONE.notice.lede}</p>
+        <p class="note-box" data-why hidden></p>
+      </header>
+
+      <div class="experiment">
+        <form class="exercise stack" data-exercise="notice" hidden>
+          {momentGroups.map((group) => (
+            <fieldset data-group>
+              <legend class="exercise-legend">{group.question}</legend>
+              <div class="option-list">
+                {group.options.map((option) => (
+                  <label>
+                    <input type="radio" name={group.name} value={option.value} required>
+                    <span>{option.label}</span>
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+          ))}
+          <p class="form-status" role="status" aria-live="polite"></p>
+          <div><button class="btn btn-primary" type="submit">See what I noticed</button></div>
+        </form>
+
+        <form class="exercise stack" data-exercise="choose" hidden>
+          <div class="field">
+            <label for="declare-purpose">What will you pick your phone up for, next time?</label>
+            <input type="text" id="declare-purpose" name="purpose" required maxlength="160" placeholder="e.g. reply to Mum about Sunday">
+          </div>
+          <div class="field">
+            <label for="declare-apps">Which app or apps? <span class="hint">Optional</span></label>
+            <input type="text" id="declare-apps" name="apps" maxlength="120" placeholder="e.g. WhatsApp">
+          </div>
+          <fieldset class="field">
+            <legend>For how long?</legend>
+            <div class="choices">
+              {MINUTES.map((minutes) => (
+                <label><input type="radio" name="minutes" value={minutes} required> {minutes} minutes</label>
+              ))}
+            </div>
+          </fieldset>
+          <p class="form-status" role="status" aria-live="polite"></p>
+          <div><button class="btn btn-primary" type="submit">Make my declaration</button></div>
+        </form>
+
+        <form class="exercise stack" data-exercise="belong" hidden>
+          <div class="field">
+            <label for="belong-sentence">Finish the sentence: "I'm someone who uses my phone to…"</label>
+            <input type="text" id="belong-sentence" name="sentence" required maxlength="200" placeholder="e.g. stay close to people, not to scroll away from them">
+          </div>
+          <div class="field">
+            <label for="belong-person">Who is one person you could tell? <span class="hint">Optional, first name only. It stays on this page.</span></label>
+            <input type="text" id="belong-person" name="person" maxlength="60">
+          </div>
+          <p class="form-status" role="status" aria-live="polite"></p>
+          <div><button class="btn btn-primary" type="submit">Done</button></div>
+        </form>
+
+        <div class="after-step" data-after hidden tabindex="-1">
+          <div data-after-for="notice" hidden>
+            <h2>Here's what you noticed</h2>
+            <ul class="noted" data-noted></ul>
+            {TRIGGERS.map((trigger) => <p data-reflection={trigger.value} hidden>{trigger.reflection}</p>)}
+            <div class="try-this">
+              <p class="eyebrow">One thing to try</p>
+              <p>{ONE_THING_TO_TRY}</p>
+            </div>
+          </div>
+
+          <div data-after-for="choose" hidden>
+            <h2>Your declaration</h2>
+            <p class="declaration" data-declaration></p>
+            <p>Next time you pick up your phone, use it for exactly this. Set your phone's own timer. When it goes off, put the phone down for the same length of time before you pick it up again.</p>
+            <p>That's the whole one-week reset, done once. If it felt useful, or annoying, that's worth knowing before step 2.</p>
+          </div>
+
+          <div data-after-for="belong" hidden>
+            <h2>Your sentence</h2>
+            <p class="declaration" data-sentence></p>
+            <p>A message you could send, in your own words if you prefer:</p>
+            <p class="try-this" data-message></p>
+            <div class="actions">
+              <button type="button" class="btn btn-secondary" data-copy>Copy the message</button>
+            </div>
+            <p class="form-status" data-copy-status role="status" aria-live="polite"></p>
+          </div>
+
+          <div class="actions next-actions">
+            <a class="btn btn-primary" href={url('/check/step-2/')}>Go to step 2</a>
+          </div>
+          <p class="fine-print">Or stop here. That's a perfectly good place to stop. What you typed stays in this browser tab unless you choose to share it in step 2.</p>
+        </div>
+      </div>
+
+      <p class="switcher">
+        Prefer a different exercise?
+        {exercises.map(([id, copy], index) => (
+          <>
+            {index > 0 && ' · '}
+            <button type="button" data-switch={id}>{copy.title}</button>
+          </>
+        ))}
+      </p>
+      <p class="fine-print">Haven't taken the check-in yet? <a href={url('/check/start/')}>It takes about four minutes</a>.</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .exercise-legend { font-family: var(--font-serif); font-size: clamp(20px, 2.6vw, 24px); font-weight: 600; line-height: 1.3; margin-bottom: 14px; padding: 0; }
+  .next-actions { margin-top: 28px; }
+</style>
+
+<script>
+  import { setUpStepOne } from '../../scripts/checkin-step1';
+
+  setUpStepOne(document);
+</script>
