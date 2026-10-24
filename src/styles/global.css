@@ -167,7 +167,7 @@ img { max-width: 100%; display: block; }
   gap: 10px;
   min-height: 44px;
 }
-.brand svg { width: 28px; height: 28px; flex-shrink: 0; }
+.brand svg { width: 36px; height: 36px; flex-shrink: 0; }
 .brand .brand-ring, .brand .brand-horizon { stroke: var(--forest); fill: none; stroke-linecap: round; }
 .brand .brand-sun { fill: var(--dawn); }
 
@@ -175,7 +175,9 @@ img { max-width: 100%; display: block; }
 .nav a, .menu-panel a {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   min-height: 44px;
+  min-width: 44px;
   padding: 0 14px;
   border-radius: 999px;
   color: var(--ink-soft);

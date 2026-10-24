@@ -79,7 +79,7 @@ const [featured, ...others] = (await getPublishedStories()).slice(0, HOME_STORY_
 
   <section class="section">
     <div class="wrap about-row">
-      <img class="headshot" src={url('/headshot.webp')} alt="Chernyang Lee" width="120" height="120">
+      <img class="headshot" src={url('/headshot.webp')} alt="" width="120" height="120">
       <div class="about-text">
         <p class="eyebrow">Who's behind this</p>
         <h2>Hello, I'm Chernyang.</h2>
@@ -99,7 +99,7 @@ const [featured, ...others] = (await getPublishedStories()).slice(0, HOME_STORY_
   .hero h1 { font-size: clamp(28px, calc((100vw - 40px) / 10.2), 64px); }
   .h1-line { display: inline-block; }
   .hero .lede { max-width: 34em; margin-bottom: 28px; }
-  .hero-note { margin-top: 18px; font-size: 14px; color: var(--ink-faint); }
+  .hero-note { margin-top: 18px; font-size: 16px; color: var(--ink-faint); }
   .statement { background: var(--twilight); border-radius: 28px; padding: clamp(28px, 5vw, 64px); }
   .statement h2 { font-size: clamp(28px, 4.4vw, 46px); max-width: 17em; }
   .statement .lede { max-width: 36em; margin: 0; color: var(--ink-soft); }
