@@ -289,7 +289,8 @@ fieldset { border: none; padding: 0; margin: 0; }
 .pause h2 { color: #FFFFFF; }
 .pause p { color: var(--pause-text); }
 .pause-inner { max-width: 620px; }
-.pause-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
+.pause-label { display: block; margin-top: 8px; font-size: 14px; font-weight: 600; color: var(--pause-text); }
+.pause-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 6px; }
 .pause-row input { flex: 1 1 240px; border-color: transparent; }
 .pause .btn-primary { background: var(--dawn); color: #23241F; }
 .pause .btn-primary:hover { background: #F1D7BD; color: #23241F; }
