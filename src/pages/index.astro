@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import StoryCard from '../components/StoryCard.astro';
-import Ripples from '../components/Ripples.astro';
+import Canopy from '../components/Canopy.astro';
 import { getPublishedStories } from '../lib/stories';
 import { url } from '../lib/url';
 
@@ -12,7 +12,7 @@ const [featured, ...others] = (await getPublishedStories()).slice(0, HOME_STORY_
   <section class="hero">
     <div class="wrap hero-grid">
       <div class="hero-copy">
-        <p class="eyebrow">Resonance · the art of being present</p>
+        <p class="eyebrow">Understory · where quieter things grow</p>
         <h1><span class="h1-line">A little less scrolling.</span> <span class="h1-line">A little more living.</span></h1>
         <p class="lede">A place to explore how we can build a wiser relationship with technology, so it serves what we value instead of competing with it.</p>
         <div class="actions">
@@ -21,7 +21,7 @@ const [featured, ...others] = (await getPublishedStories()).slice(0, HOME_STORY_
         </div>
         <p class="hero-note">No guilt. No streaks. No pressure to give up technology.</p>
       </div>
-      <Ripples />
+      <Canopy />
     </div>
   </section>
 
@@ -30,7 +30,7 @@ const [featured, ...others] = (await getPublishedStories()).slice(0, HOME_STORY_
       <div class="statement">
         <p class="eyebrow">You might recognise this</p>
         <h2>You picked up your phone for one thing. Twenty minutes later, you were somewhere else.</h2>
-        <p class="lede">Most of us have been there. Resonance is about what makes those moments happen, and what we can do differently, starting small: a story to recognise yourself in, an experiment to try, and a short note on Sundays.</p>
+        <p class="lede">Most of us have been there. Understory is about what pulls us into those moments, and what we can do differently, starting small: a story to recognise yourself in, an experiment to try, and a short note on Sundays.</p>
       </div>
     </div>
   </section>

@@ -168,8 +168,8 @@ img { max-width: 100%; display: block; }
   min-height: 44px;
 }
 .brand svg { width: 28px; height: 28px; flex-shrink: 0; }
-.brand .brand-ring { stroke: var(--forest); fill: none; }
-.brand .brand-core { fill: var(--forest); }
+.brand .brand-ring, .brand .brand-horizon { stroke: var(--forest); fill: none; stroke-linecap: round; }
+.brand .brand-sun { fill: var(--dawn); }
 
 .nav-desktop { display: none; align-items: center; gap: 4px; }
 .nav a, .menu-panel a {
