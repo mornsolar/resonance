@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import StoryCard from '../components/StoryCard.astro';
-import Ripples from '../components/Ripples.astro';
+import Canopy from '../components/Canopy.astro';
 import { getPublishedStories } from '../lib/stories';
 import { url } from '../lib/url';
 
@@ -12,7 +12,7 @@ const [featured, ...others] = (await getPublishedStories()).slice(0, HOME_STORY_
   <section class="hero">
     <div class="wrap hero-grid">
       <div class="hero-copy">
-        <p class="eyebrow">Resonance · the art of being present</p>
+        <p class="eyebrow">Understory · where quieter things grow</p>
         <h1><span class="h1-line">A little less scrolling.</span> <span class="h1-line">A little more living.</span></h1>
         <p class="lede">A place to explore how we can build a wiser relationship with technology, so it serves what we value instead of competing with it.</p>
         <div class="actions">
@@ -21,7 +21,7 @@ const [featured, ...others] = (await getPublishedStories()).slice(0, HOME_STORY_
         </div>
         <p class="hero-note">No guilt. No streaks. No pressure to give up technology.</p>
       </div>
-      <Ripples />
+      <Canopy />
     </div>
   </section>
 
@@ -30,7 +30,7 @@ const [featured, ...others] = (await getPublishedStories()).slice(0, HOME_STORY_
       <div class="statement">
         <p class="eyebrow">You might recognise this</p>
         <h2>You picked up your phone for one thing. Twenty minutes later, you were somewhere else.</h2>
-        <p class="lede">Most of us have been there. Resonance is about what makes those moments happen, and what we can do differently, starting small: a story to recognise yourself in, an experiment to try, and a short note on Sundays.</p>
+        <p class="lede">Most of us have been there. Understory is about what pulls us into those moments, and what we can do differently, starting small: a story to recognise yourself in, an experiment to try, and a short note on Sundays.</p>
       </div>
     </div>
   </section>
@@ -79,7 +79,7 @@ const [featured, ...others] = (await getPublishedStories()).slice(0, HOME_STORY_
 
   <section class="section">
     <div class="wrap about-row">
-      <img class="headshot" src={url('/headshot.webp')} alt="Chernyang Lee" width="120" height="120">
+      <img class="headshot" src={url('/headshot.webp')} alt="" width="120" height="120">
       <div class="about-text">
         <p class="eyebrow">Who's behind this</p>
         <h2>Hello, I'm Chernyang.</h2>
@@ -99,7 +99,7 @@ const [featured, ...others] = (await getPublishedStories()).slice(0, HOME_STORY_
   .hero h1 { font-size: clamp(28px, calc((100vw - 40px) / 10.2), 64px); }
   .h1-line { display: inline-block; }
   .hero .lede { max-width: 34em; margin-bottom: 28px; }
-  .hero-note { margin-top: 18px; font-size: 14px; color: var(--ink-faint); }
+  .hero-note { margin-top: 18px; font-size: 16px; color: var(--ink-faint); }
   .statement { background: var(--twilight); border-radius: 28px; padding: clamp(28px, 5vw, 64px); }
   .statement h2 { font-size: clamp(28px, 4.4vw, 46px); max-width: 17em; }
   .statement .lede { max-width: 36em; margin: 0; color: var(--ink-soft); }

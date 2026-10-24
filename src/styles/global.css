@@ -167,15 +167,17 @@ img { max-width: 100%; display: block; }
   gap: 10px;
   min-height: 44px;
 }
-.brand svg { width: 28px; height: 28px; flex-shrink: 0; }
-.brand .brand-ring { stroke: var(--forest); fill: none; }
-.brand .brand-core { fill: var(--forest); }
+.brand svg { width: 36px; height: 36px; flex-shrink: 0; }
+.brand .brand-ring, .brand .brand-horizon { stroke: var(--forest); fill: none; stroke-linecap: round; }
+.brand .brand-sun { fill: var(--dawn); }
 
 .nav-desktop { display: none; align-items: center; gap: 4px; }
 .nav a, .menu-panel a {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   min-height: 44px;
+  min-width: 44px;
   padding: 0 14px;
   border-radius: 999px;
   color: var(--ink-soft);
@@ -287,7 +289,8 @@ fieldset { border: none; padding: 0; margin: 0; }
 .pause h2 { color: #FFFFFF; }
 .pause p { color: var(--pause-text); }
 .pause-inner { max-width: 620px; }
-.pause-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
+.pause-label { display: block; margin-top: 8px; font-size: 14px; font-weight: 600; color: var(--pause-text); }
+.pause-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 6px; }
 .pause-row input { flex: 1 1 240px; border-color: transparent; }
 .pause .btn-primary { background: var(--dawn); color: #23241F; }
 .pause .btn-primary:hover { background: #F1D7BD; color: #23241F; }

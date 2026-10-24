@@ -1,0 +1,59 @@
+---
+// The Understory mark at hero size: three rings widening over a horizon, the sun just up,
+// and a faint reflection below the line for the sun to rise from.
+const HORIZON = 250;
+const CENTER = 200;
+const rings = [
+  { r: 92, opacity: 0.85, reflection: 0.14 },
+  { r: 146, opacity: 0.55, reflection: 0.08 },
+  { r: 196, opacity: 0.28 },
+];
+const SUN_RADIUS = 46;
+const arc = (r: number, sweep: 0 | 1) => `M${CENTER - r} ${HORIZON} A${r} ${r} 0 0 ${sweep} ${CENTER + r} ${HORIZON}`;
+---
+<div class="canopy" aria-hidden="true">
+  <svg viewBox="0 0 400 400" focusable="false">
+    <defs>
+      <radialGradient id="canopy-glow" cx="50%" cy="63%" r="55%">
+        <stop class="glow-start" offset="0%" />
+        <stop class="glow-end" offset="100%" />
+      </radialGradient>
+    </defs>
+    <circle cx="200" cy="200" r="199" fill="url(#canopy-glow)" />
+    {rings.filter((ring) => ring.reflection).map((ring) => (
+      <path class="ring" style={`opacity:${ring.reflection}`} d={arc(ring.r, 0)} fill="none" />
+    ))}
+    {rings.map((ring, i) => (
+      <path class="ring breathes" style={`--i:${i}; opacity:${ring.opacity}`} d={arc(ring.r, 1)} fill="none" />
+    ))}
+    <path class="sun" d={`${arc(SUN_RADIUS, 1)} Z`} />
+    <line class="horizon" x1="30" y1={HORIZON} x2="370" y2={HORIZON} />
+  </svg>
+</div>
+
+<style>
+  .canopy { width: min(68%, 420px); aspect-ratio: 1; justify-self: center; }
+  @media (min-width: 900px) {
+    .canopy { width: min(100%, 420px); }
+  }
+  svg { width: 100%; height: 100%; display: block; }
+  .glow-start { stop-color: var(--sage); stop-opacity: 1; }
+  .glow-end { stop-color: var(--sage); stop-opacity: 0; }
+  .ring { stroke: var(--forest); stroke-width: 1.8; stroke-linecap: round; }
+  .horizon { stroke: var(--forest); stroke-width: 2.2; stroke-linecap: round; }
+  .sun { fill: var(--dawn); }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .breathes {
+      transform-box: view-box;
+      transform-origin: 200px 250px;
+      animation: breathe 9s ease-in-out infinite;
+      animation-delay: calc(var(--i) * -3s);
+    }
+  }
+
+  @keyframes breathe {
+    0%, 100% { transform: scale(0.98); }
+    50% { transform: scale(1.03); }
+  }
+</style>

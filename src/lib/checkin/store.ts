@@ -6,7 +6,7 @@ import type { Answers, DimensionId } from './types';
  * this browser tab, disappears when the tab closes, and never reaches the
  * server except through the forms the person chooses to submit.
  */
-export const STORAGE_KEY = 'resonance-checkin';
+export const STORAGE_KEY = 'understory-checkin';
 const RECORD_VERSION = 1;
 const MAX_TEXT_LENGTH = 2000;
 

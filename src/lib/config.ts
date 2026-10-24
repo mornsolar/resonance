@@ -1,4 +1,4 @@
-export const SITE_NAME = 'Resonance';
+export const SITE_NAME = 'Understory';
 export const FOUNDER_NAME = 'Chernyang Lee';
 export const CONTACT_EMAIL = 'chernyang.lee@gmail.com';
 export const LINKEDIN_URL = 'https://www.linkedin.com/in/chernyang-lee-8924a75b/';
