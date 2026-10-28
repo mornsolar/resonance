@@ -1,6 +1,6 @@
-# Resonance website
+# Understory website
 
-Astro 7 static site for the founder's intentional-technology venture. Live at https://mornsolar.github.io/resonance/ (repo `mornsolar/resonance`). Every push to `main` builds and deploys through `.github/workflows/deploy.yml`.
+Astro 7 static site for the founder's intentional-technology venture. Live at https://mornsolar.vercel.app/ (also served on GitHub Pages at https://mornsolar.github.io/resonance/; repo `mornsolar/resonance`). Use the Vercel address when sharing links. Every push to `main` builds and deploys through `.github/workflows/deploy.yml`.
 
 ## Commands
 
@@ -34,5 +34,7 @@ A lead-generation assessment built on the Priestley 10+5 structure: landing page
 - Colours come from the tokens at the top of `src/styles/global.css`, with a dark-mode override under `prefers-color-scheme: dark`. Use tokens (`var(--forest)`, `var(--paper-deep)`), never raw hex, so both themes stay in step.
 - Fonts are self-hosted through `@fontsource-variable` (no Google Fonts requests). Motion is optional and must respect `prefers-reduced-motion`.
 - `public/og.png` is the social preview image. If the tagline or brand colours change, regenerate it rather than leaving it stale.
-- Brand rules come from `Mission & Vision/Brand Identity - Resonance.md` in the vault: calm, trusted-friend voice; no pop-ups, streaks, countdowns or urgency tricks.
+- The brand was renamed from Resonance to Understory. The Understory design system (palette, type, mark) is the reference for look and voice. The mark is rings over a horizon with a half-disc sun: `src/components/Canopy.astro` (hero), the header mark in `Base.astro`, and `public/favicon.svg`. Metaphor for copy: the understory is the calm layer beneath the canopy where what matters gets enough light to grow. Do not reuse the old tuning-fork or "respond when struck" language.
+- Brand rules come from the brand identity note in the vault's `Mission & Vision` folder (still filed as `Brand Identity - Resonance.md` until renamed): calm, trusted-friend voice; no pop-ups, streaks, countdowns or urgency tricks.
+- The repo, GitHub Pages path (`/resonance` in `astro.config.mjs`) and live URL above still carry the old name until the repo is renamed; change them together.
 - Commits use conventional format (`feat:`, `fix:`, `docs:` and so on).

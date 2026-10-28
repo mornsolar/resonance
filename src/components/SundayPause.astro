@@ -16,9 +16,9 @@ import { FORMSPREE_ENDPOINT } from '../lib/config';
         <input type="hidden" name="_subject" value="Sunday Pause: new subscriber">
         <input type="hidden" name="form" value="sunday-pause">
         <p class="trap" aria-hidden="true"><label>Leave this empty <input type="text" name="_gotcha" tabindex="-1" autocomplete="off"></label></p>
+        <label for="pause-email" class="pause-label">Your email address</label>
         <div class="pause-row">
-          <label for="pause-email" class="visually-hidden">Your email address</label>
-          <input id="pause-email" type="email" name="email" required autocomplete="email" placeholder="Your email address">
+          <input id="pause-email" type="email" name="email" required autocomplete="email">
           <button class="btn btn-primary" type="submit">Join the Sunday Pause</button>
         </div>
         <p class="form-status" role="status" aria-live="polite"></p>
