@@ -25,6 +25,10 @@ A lead-generation assessment built on the Priestley 10+5 structure: landing page
 - Research claims in the copy come from the vault's Research & Trends notes. Never cite the "mere presence / brain drain" effect (it did not replicate) or call anything "brain rot".
 - Band cut-offs (8 and 15) are pilot guesses. Revisit them once real results arrive.
 
+## Campaign tags
+
+Links we share carry a short tag, `?src=<tag>` (lower-case letters, digits and hyphens, up to 40 characters). `src/lib/campaign.ts` keeps the tag for the browser tab in `sessionStorage` and adds it as a `campaign` field to every Formspree submission: the ordinary forms (`src/scripts/forms.ts`) and the check-in (`src/scripts/checkin-send.ts`). The site has no analytics, so this is the only way to tell where a sign-up came from. Tags in use: `youtube-description`, `youtube-comment`, `youtube-endcard`, `facebook-post`, `linkedin-post`. Add new tags freely, keep them descriptive, and list them here. The privacy page names this.
+
 ## Rules
 
 - No invented content. Copy comes from the vault or is approved by the founder; if something is missing, ask rather than write filler.
