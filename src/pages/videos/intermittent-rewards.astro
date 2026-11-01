@@ -1,0 +1,145 @@
+---
+import Base from '../../layouts/Base.astro';
+import VideoPlayer from '../../components/VideoPlayer.astro';
+import { url } from '../../lib/url';
+import { formatTimestamp, youtubeEmbedUrl, youtubeWatchUrl } from '../../lib/video';
+import { CAMPAIGN_PARAM } from '../../lib/campaign';
+import { CHAPTERS, CHECKED, NOT_VERIFIED, QUESTIONS, TRANSCRIPT, VIDEO } from '../../lib/videos/intermittent-rewards';
+
+const COMPANION_TAG = 'companion-page';
+const checkinHref = `${url('/check/')}?${CAMPAIGN_PARAM}=${COMPANION_TAG}`;
+const published = new Date(`${VIDEO.uploadDate}T00:00:00Z`).toLocaleDateString('en-GB', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+  timeZone: 'UTC',
+});
+
+const thumbnailUrl = new URL(url(VIDEO.thumbnail), Astro.site).href;
+const isoDuration = `PT${Math.floor(VIDEO.durationSeconds / 60)}M${VIDEO.durationSeconds % 60}S`;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'VideoObject',
+  name: VIDEO.title,
+  description: VIDEO.summary,
+  thumbnailUrl,
+  uploadDate: VIDEO.uploadDate,
+  duration: isoDuration,
+  embedUrl: youtubeEmbedUrl(VIDEO.id),
+  contentUrl: youtubeWatchUrl(VIDEO.id),
+  hasPart: CHAPTERS.map((chapter, index) => ({
+    '@type': 'Clip',
+    name: chapter.title,
+    startOffset: chapter.startSeconds,
+    endOffset: CHAPTERS[index + 1]?.startSeconds ?? VIDEO.durationSeconds,
+    url: youtubeWatchUrl(VIDEO.id, chapter.startSeconds),
+  })),
+};
+---
+<Base title={VIDEO.title} description={VIDEO.pageDescription} ogType="article" jsonLd={jsonLd}>
+  <section class="section">
+    <div class="wrap">
+      <header class="intro">
+        <p class="eyebrow">Video</p>
+        <h1>{VIDEO.title}</h1>
+        <p class="lede">{VIDEO.summary}</p>
+        <p class="meta">{formatTimestamp(VIDEO.durationSeconds)} · Published {published}</p>
+      </header>
+
+      <VideoPlayer
+        videoId={VIDEO.id}
+        title={VIDEO.title}
+        thumbnail={VIDEO.thumbnail}
+        thumbnailAlt={VIDEO.thumbnailAlt}
+        chapters={CHAPTERS}
+      />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="read prose-lite">
+      <h2>Take it with you</h2>
+      <p>Three questions to ask of anything on your phone that keeps pulling you back:</p>
+      <ol class="questions">
+        {QUESTIONS.map((question) => <li>{question}</li>)}
+      </ol>
+      <p>Knowing the pattern doesn't switch it off. I still doom-scroll sometimes. What knowing gives me is the chance to notice it sooner.</p>
+      <p>
+        <a class="btn btn-primary" href={checkinHref}>Try the 3-minute phone check-in</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="read prose-lite">
+      <h2>Sources, and what I couldn't verify</h2>
+      <p>I checked the claims in the video after recording it. Here is where each one stands.</p>
+      <h3>Checked</h3>
+      <ul class="notes">
+        {CHECKED.map((note) => (
+          <li>
+            <strong>{note.title}.</strong> {note.text}
+            {note.href && <> <a href={note.href} target="_blank" rel="noopener">{note.linkText}</a>.</>}
+          </li>
+        ))}
+      </ul>
+      <h3>Not verified</h3>
+      <ul class="notes">
+        {NOT_VERIFIED.map((note) => (
+          <li><strong>{note.title}.</strong> {note.text}</li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="read prose-lite">
+      <h2>Transcript</h2>
+      <details class="transcript">
+        <summary>Read the full transcript</summary>
+        <p class="fine-print">Cleaned from YouTube's automatic captions. A few lines may still be mis-heard. Select a time to play from there.</p>
+        {TRANSCRIPT.map((block) => (
+          <p>
+            <a
+              class="stamp"
+              href={youtubeWatchUrl(VIDEO.id, block.start)}
+              target="_blank"
+              rel="noopener"
+              data-video-seek={block.start}
+            >{formatTimestamp(block.start)}</a>
+            {block.text}
+          </p>
+        ))}
+      </details>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .intro { max-width: var(--read); margin-bottom: 32px; }
+  .intro h1 { margin-bottom: 0.4em; }
+  .meta { color: var(--ink-faint); font-size: 15px; margin-top: 12px; }
+  .prose-lite h2 { font-size: clamp(22px, 3vw, 28px); margin-top: 0; }
+  .prose-lite h3 { font-size: 18px; margin-top: 1.6em; }
+  .prose-lite ul,
+  .prose-lite ol { padding-left: 22px; }
+  .prose-lite li { margin-bottom: 0.7em; }
+  .questions { font-family: var(--font-serif); font-size: clamp(19px, 2.4vw, 22px); line-height: 1.4; }
+  .transcript summary {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    font-weight: 600;
+    color: var(--forest-deep);
+  }
+  .transcript summary:focus-visible { outline: 3px solid var(--forest); outline-offset: 2px; }
+  .transcript > p { margin: 0 0 1em; }
+  .stamp {
+    display: inline-block;
+    min-width: 3.4ch;
+    margin-right: 8px;
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+  }
+</style>

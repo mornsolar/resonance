@@ -27,7 +27,11 @@ A lead-generation assessment built on the Priestley 10+5 structure: landing page
 
 ## Campaign tags
 
-Links we share carry a short tag, `?src=<tag>` (lower-case letters, digits and hyphens, up to 40 characters). `src/lib/campaign.ts` keeps the tag for the browser tab in `sessionStorage` and adds it as a `campaign` field to every Formspree submission: the ordinary forms (`src/scripts/forms.ts`) and the check-in (`src/scripts/checkin-send.ts`). The site has no analytics, so this is the only way to tell where a sign-up came from. Tags in use: `youtube-description`, `youtube-comment`, `youtube-endcard`, `facebook-post`, `linkedin-post`. Add new tags freely, keep them descriptive, and list them here. The privacy page names this.
+Links we share carry a short tag, `?src=<tag>` (lower-case letters, digits and hyphens, up to 40 characters). `src/lib/campaign.ts` keeps the tag for the browser tab in `sessionStorage` and adds it as a `campaign` field to every Formspree submission: the ordinary forms (`src/scripts/forms.ts`) and the check-in (`src/scripts/checkin-send.ts`). The site has no analytics, so this is the only way to tell where a sign-up came from. Tags in use: `youtube-description`, `youtube-comment`, `youtube-endcard`, `facebook-post`, `linkedin-post`, `companion-page` (the check-in button on the video page). Add new tags freely, keep them descriptive, and list them here. The privacy page names this.
+
+## Video pages (`/videos/`)
+
+`src/pages/videos/intermittent-rewards.astro` is the companion page for the first YouTube video (id `TxRZGMaj0Hs`). Copy, chapters, sources and transcript live in `src/lib/videos/`; the timestamp and YouTube address helpers are in `src/lib/video.ts`. The player (`src/components/VideoPlayer.astro`) is a click-to-play facade: nothing is requested from YouTube or Google until the visitor presses play, then it plays from `youtube-nocookie.com`. The page is deliberately not linked from the nav, the video or the posts until after experiment EXP-012 closes (15 November 2026), so the funnel stays unchanged during the measurement window. The transcript is cleaned from automatic captions and nine lines were never checked against the audio.
 
 ## Rules
 
