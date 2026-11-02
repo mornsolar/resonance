@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import { url } from '../lib/url';
+import { resetHref } from '../lib/reset-promo';
 import { CONTACT_EMAIL, FOUNDER_NAME, LINKEDIN_URL } from '../lib/config';
 
 const jsonLd = {
@@ -43,7 +44,7 @@ const jsonLd = {
       <p>I test ideas on myself first, usually on ordinary days with my own family, and write up what happened honestly, including the parts that went wrong. Some of what you'll read here is unproven, and I'll say so when it is. I'd rather show you a real experiment in progress than a polished claim I can't back up.</p>
       <div class="actions">
         <a class="btn btn-secondary" href={url('/stories/')}>Read the stories</a>
-        <a class="btn btn-secondary" href={url('/reset/')}>Join the one-week reset</a>
+        <a class="btn btn-secondary" href={resetHref(url('/reset/'), 'about')}>Join the one-week reset</a>
       </div>
     </div>
   </section>

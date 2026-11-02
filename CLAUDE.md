@@ -29,6 +29,10 @@ A lead-generation assessment built on the Priestley 10+5 structure: landing page
 
 Links we share carry a short tag, `?src=<tag>` (lower-case letters, digits and hyphens, up to 40 characters). `src/lib/campaign.ts` keeps the tag for the browser tab in `sessionStorage` and adds it as a `campaign` field to every Formspree submission: the ordinary forms (`src/scripts/forms.ts`) and the check-in (`src/scripts/checkin-send.ts`). The site has no analytics, so this is the only way to tell where a sign-up came from. Tags in use: `youtube-description`, `youtube-comment`, `youtube-endcard`, `facebook-post`, `linkedin-post`. Add new tags freely, keep them descriptive, and list them here. The privacy page names this.
 
+## Promoting the one-week reset
+
+`src/components/ResetPromo.astro` invites people to the reset from other pages: a full card (home page, and the phone-lock story) or one inline sentence (other stories, check-in step 1, speaking). Wording and helpers live in `src/lib/reset-promo.ts` (tested); keep claims to what the reset page already says (free, a handful of people, a personal reply within a day). No urgency, scarcity or countdowns. Each link carries `?from=<placement>` (`home`, `story`, `try`, `step-1`, `about`, `speaking`), and `src/scripts/reset-source.ts` writes it into the form's hidden `source` field (`reset-page-from-home` and so on), so the Formspree inbox shows which placement brought each sign-up. This is separate from the `?src=` campaign tags and never overwrites them. The 15-minute booking link goes to Google Calendar and cannot be tagged. Add a placement by extending `PLACEMENTS`.
+
 ## Rules
 
 - No invented content. Copy comes from the vault or is approved by the founder; if something is missing, ask rather than write filler.

@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import { url } from '../lib/url';
+import { resetHref } from '../lib/reset-promo';
 import { CONTACT_EMAIL } from '../lib/config';
 import { FEELINGS, MOMENT_QUESTIONS, ONE_THING_TO_TRY, OUTCOMES, TRIGGERS } from '../lib/moments';
 
@@ -48,7 +49,7 @@ const steps = [
           </div>
           <p>You can close this page now. Really. If it changes anything, I'd love to hear about it.</p>
           <div class="actions">
-            <a class="btn btn-secondary" href={url('/reset/')}>Go deeper: the one-week reset</a>
+            <a class="btn btn-secondary" href={resetHref(url('/reset/'), 'try')}>Go deeper: the one-week reset</a>
             <a class="btn btn-secondary" href={`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent('What I noticed')}`}>Tell me what happened</a>
           </div>
           <p class="restart-row"><button type="button" class="quiet-toggle" data-restart>Start again</button></p>

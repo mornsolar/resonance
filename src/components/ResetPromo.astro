@@ -1,0 +1,53 @@
+---
+// An invitation to the one-week reset, for pages other than the reset page itself.
+// "card" is a full panel with both actions; "inline" is one sentence with a link.
+// Links carry ?from=<placement> so the sign-up records which page it came from (see src/scripts/reset-source.ts).
+import { url } from '../lib/url';
+import { BOOKING_URL } from '../lib/config';
+import { PROMO_COPY, resetHref, type Placement } from '../lib/reset-promo';
+
+interface Props {
+  from: Placement;
+  variant?: 'card' | 'inline';
+  /** A short sentence before the link in the inline version, written for the page it sits on. */
+  lead?: string;
+}
+
+const { from, variant = 'card', lead } = Astro.props;
+const href = resetHref(url('/reset/'), from);
+const titleId = `reset-promo-${from}`;
+---
+{variant === 'card' ? (
+  <aside class="reset-promo" aria-labelledby={titleId}>
+    <p class="eyebrow">{PROMO_COPY.eyebrow}</p>
+    <h2 id={titleId}>{PROMO_COPY.heading}</h2>
+    <p class="promo-body">{PROMO_COPY.body}</p>
+    <div class="actions">
+      <a class="btn btn-primary" href={href}>{PROMO_COPY.register}</a>
+      <a class="btn btn-secondary" href={BOOKING_URL} target="_blank" rel="noopener">{PROMO_COPY.book}</a>
+    </div>
+    <p class="fine-print promo-reply">{PROMO_COPY.reply}</p>
+  </aside>
+) : (
+  <p class="reset-inline">{lead && <>{lead} </>}<a href={href}>{PROMO_COPY.inlineLink}</a>.</p>
+)}
+
+<style>
+  .reset-promo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    padding: clamp(24px, 4vw, 40px);
+    border-radius: var(--radius);
+    background: var(--twilight);
+  }
+  .reset-promo .eyebrow { margin: 0; }
+  .reset-promo h2 { margin: 0; font-size: clamp(24px, 3.2vw, 32px); max-width: 22em; }
+  .promo-body { margin: 0; max-width: 38em; font-size: 17px; color: var(--ink-soft); }
+  .promo-reply { margin: 0; }
+  /* The default secondary button has a faint border that disappears on this panel; give it a solid fill. */
+  .reset-promo :global(.btn-secondary) { background: var(--paper); border-color: var(--paper); }
+  .reset-promo :global(.btn-secondary:hover) { border-color: var(--forest); }
+  .reset-inline { margin: 20px 0 0; color: var(--ink-soft); }
+</style>
