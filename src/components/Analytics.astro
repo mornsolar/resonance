@@ -1,0 +1,13 @@
+---
+// Cloudflare Web Analytics beacon. Renders nothing unless the site is built for the production address and
+// CLOUDFLARE_ANALYTICS_TOKEN is set (see src/lib/analytics.ts). The privacy page describes this.
+import { CLOUDFLARE_ANALYTICS_TOKEN, PRODUCTION_HOSTNAME } from '../lib/config';
+import { ANALYTICS_BEACON_URL, beaconAttribute, shouldLoadAnalytics } from '../lib/analytics';
+
+const isEnabled = Astro.site
+  ? shouldLoadAnalytics(Astro.site.hostname, PRODUCTION_HOSTNAME, CLOUDFLARE_ANALYTICS_TOKEN)
+  : false;
+---
+{isEnabled && (
+  <script is:inline defer src={ANALYTICS_BEACON_URL} data-cf-beacon={beaconAttribute(CLOUDFLARE_ANALYTICS_TOKEN)}></script>
+)}

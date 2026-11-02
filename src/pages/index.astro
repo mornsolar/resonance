@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import StoryCard from '../components/StoryCard.astro';
 import Canopy from '../components/Canopy.astro';
+import ResetPromo from '../components/ResetPromo.astro';
 import { getPublishedStories } from '../lib/stories';
 import { url } from '../lib/url';
 
@@ -68,12 +69,13 @@ const [featured, ...others] = (await getPublishedStories()).slice(0, HOME_STORY_
           <p>Three questions about the last time you picked up your phone without meaning to. No sign-up, and nothing is saved.</p>
           <span class="more" aria-hidden="true">Try it →</span>
         </article>
-        <article class="card card-twilight">
-          <h3><a href={url('/reset/')}>The one-week reset</a></h3>
-          <p>A small pilot: say what you're picking your phone up for and for how long, then lock it away for the same stretch afterwards. I'm looking for a few people to run it with me.</p>
-          <span class="more" aria-hidden="true">Find out more →</span>
-        </article>
       </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <ResetPromo from="home" />
     </div>
   </section>
 
@@ -94,6 +96,8 @@ const [featured, ...others] = (await getPublishedStories()).slice(0, HOME_STORY_
 </Base>
 
 <style>
+  /* With the reset now its own section, the pause card is the only card left under the check-in: let it span the row. */
+  .grid > .card-sage:last-child { grid-column: 1 / -1; }
   .hero { padding: clamp(32px, 6vw, 80px) 0 clamp(48px, 7vw, 96px); }
   .hero-grid { display: grid; gap: 40px; align-items: center; }
   .hero h1 { font-size: clamp(28px, calc((100vw - 40px) / 10.2), 64px); }
