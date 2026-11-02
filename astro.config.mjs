@@ -1,9 +1,10 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
-// The site is served from the root of mornsolar.vercel.app, so it needs no base path.
-// If a custom domain is added later, change PRODUCTION_SITE to that domain.
-const PRODUCTION_SITE = 'https://mornsolar.vercel.app';
+// The site is served from the root of mornsolar.com, so it needs no base path. The old mornsolar.vercel.app
+// address redirects here (see vercel.json) so printed QR codes and shared links keep working.
+// When hosting moves to Cloudflare, only where mornsolar.com points changes; this address stays.
+const PRODUCTION_SITE = 'https://mornsolar.com';
 
 // Canonical links, the social image URL and the sitemap are built from `site`.
 // Vercel production and local builds use the public address; Vercel previews use their
