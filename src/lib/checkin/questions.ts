@@ -93,7 +93,7 @@ export const SCORED_QUESTIONS: readonly ScoredQuestion[] = [
       { value: 'rarely', label: 'Rarely. I stop when something interrupts me', points: 0 },
     ],
     strength:
-      "You tend to set a stopping point before you open a feed. In small lab studies, people capped at ten swipes didn't show the drop in remembering their own plans that unlimited swiping caused, so this habit may be doing more than it seems.",
+      "You tend to set a stopping point before you open a feed. In small studies, people who swiped through short videos with no limit were worse afterwards at remembering their own plans; in one of them, people whose swiping was limited did better. That isn't the same as choosing your own stopping point, but this habit may be doing more than it seems.",
     action:
       'Next time you open a short-video feed, pick a stopping point before the first swipe: ten videos, or one song. When you reach it, stop and decide again. You can carry on; the point is that carrying on becomes a decision.',
   },
@@ -137,7 +137,7 @@ export const SCORED_QUESTIONS: readonly ScoredQuestion[] = [
       { value: 'no-one', label: 'No one, really', points: 0 },
     ],
     strength:
-      'Someone else knows what you are aiming for. Telling one trusted person privately tends to help follow-through more than announcing it publicly.',
+      'Someone else knows what you are aiming for. Telling one person you trust and asking them to check in is my working idea; the research on sharing goals is mixed.',
     action:
       'Tell one person you trust, privately, one thing you would like to change about how you use your phone. Not a public post. Just one person who might ask you how it is going.',
   },

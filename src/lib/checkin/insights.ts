@@ -8,7 +8,7 @@ const NO_STRENGTH_YET =
 /** Third insight, chosen by what the person said has got in the way (Q13). */
 const OBSTACLE_INSIGHTS: Readonly<Record<string, string>> = {
   forget:
-    "You said you make a plan when you're calm, then lose it in the moment. That isn't a willpower problem. In small lab studies, people who scrolled short-video feeds without limits were worse afterwards at remembering intentions they had made earlier; people capped at ten swipes weren't. They are single-session studies, so treat this as a clue rather than a verdict, but it suggests the fix is a decision point in the moment, not a better plan in advance.",
+    "You said you make a plan when you're calm, then lose it in the moment. That may not be a willpower problem. In small studies, people who swiped through short videos with no limit were worse afterwards at remembering a plan they had made earlier; in one of them, people whose swiping was limited did better. They are single-session studies, so treat this as a clue rather than a verdict. My working idea is that the fix is a decision point in the moment, not a better plan in advance.",
   'apps-off':
     "You said you've tried limits or apps but end up switching them off. That's very common, and it's worth asking who set the rule. A limit an app hands you is easy to resent and override. The one-week reset tests a different idea: you set the rule yourself, for a fixed stretch, and then keep it.",
   reachable:
