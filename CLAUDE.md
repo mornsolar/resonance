@@ -1,6 +1,6 @@
 # Understory website
 
-Astro 7 static site for the founder's intentional-technology venture. Live at https://mornsolar.vercel.app/ (also served on GitHub Pages at https://mornsolar.github.io/resonance/; repo `mornsolar/resonance`). Use the Vercel address when sharing links. Every push to `main` builds and deploys through `.github/workflows/deploy.yml`.
+Astro 7 static site for the founder's intentional-technology venture. Live at https://mornsolar.vercel.app/ (repo `mornsolar/resonance`). Always share and link the Vercel address; never use `mornsolar.github.io`. A GitHub Pages copy still builds from `.github/workflows/deploy.yml` on every push to `main`, and nothing should point to it. Vercel deploys `main` on its own.
 
 ## Commands
 
