@@ -93,7 +93,7 @@ export const SCORED_QUESTIONS: readonly ScoredQuestion[] = [
       { value: 'rarely', label: 'Rarely. I stop when something interrupts me', points: 0 },
     ],
     strength:
-      "You tend to set a stopping point before you open a feed. In small studies, people who swiped through short videos with no limit were worse afterwards at remembering their own plans; in one of them, people whose swiping was limited did better. That isn't the same as choosing your own stopping point, but this habit may be doing more than it seems.",
+      "You tend to set a stopping point before you open a feed. In small studies, people who swiped through short videos with no limit were worse afterwards at remembering a plan they had made earlier; in one of them, people whose swiping was limited did better. That isn't the same as choosing your own stopping point, so it is only a clue that this habit may help.",
     action:
       'Next time you open a short-video feed, pick a stopping point before the first swipe: ten videos, or one song. When you reach it, stop and decide again. You can carry on; the point is that carrying on becomes a decision.',
   },
