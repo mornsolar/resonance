@@ -27,11 +27,15 @@ A lead-generation assessment built on the Priestley 10+5 structure: landing page
 
 ## Campaign tags
 
-Links we share carry a short tag, `?src=<tag>` (lower-case letters, digits and hyphens, up to 40 characters). `src/lib/campaign.ts` keeps the tag for the browser tab in `sessionStorage` and adds it as a `campaign` field to every Formspree submission: the ordinary forms (`src/scripts/forms.ts`) and the check-in (`src/scripts/checkin-send.ts`). The site has no analytics, so this is the only way to tell where a sign-up came from. Tags in use: `youtube-description`, `youtube-comment`, `youtube-endcard`, `facebook-post`, `linkedin-post`. Add new tags freely, keep them descriptive, and list them here. The privacy page names this.
+Links we share carry a short tag, `?src=<tag>` (lower-case letters, digits and hyphens, up to 40 characters). `src/lib/campaign.ts` keeps the tag for the browser tab in `sessionStorage` and adds it as a `campaign` field to every Formspree submission: the ordinary forms (`src/scripts/forms.ts`) and the check-in (`src/scripts/checkin-send.ts`). Page-level visit counts come from Cloudflare Web Analytics (see Analytics below), but only these tags connect a sign-up to the link it came from. Tags in use: `youtube-description`, `youtube-comment`, `youtube-endcard`, `facebook-post`, `linkedin-post`. Add new tags freely, keep them descriptive, and list them here. The privacy page names this.
 
 ## Promoting the one-week reset
 
 `src/components/ResetPromo.astro` invites people to the reset from other pages: a full card (home page, and the phone-lock story) or one inline sentence (other stories, check-in step 1, speaking). Wording and helpers live in `src/lib/reset-promo.ts` (tested); keep claims to what the reset page already says (free, a handful of people, a personal reply within a day). No urgency, scarcity or countdowns. Each link carries `?from=<placement>` (`home`, `story`, `try`, `step-1`, `about`, `speaking`), and `src/scripts/reset-source.ts` writes it into the form's hidden `source` field (`reset-page-from-home` and so on), so the Formspree inbox shows which placement brought each sign-up. This is separate from the `?src=` campaign tags and never overwrites them. The 15-minute booking link goes to Google Calendar and cannot be tagged. Add a placement by extending `PLACEMENTS`.
+
+## Analytics
+
+Cloudflare Web Analytics, free and cookieless, counts page views. `src/components/Analytics.astro` (in `Base.astro`) adds Cloudflare's beacon only when the site is built for `PRODUCTION_HOSTNAME` (`mornsolar.com`) and `CLOUDFLARE_ANALYTICS_TOKEN` in `src/lib/config.ts` is set, so local builds, Vercel previews and other addresses never report; `src/lib/analytics.ts` holds that rule and is tested. The token is public (it is visible in the page source), not a secret. The privacy page, "Counting visits", says what is collected and must stay accurate: it relies on Cloudflare's own statement that the beacon uses no cookies or localStorage and does not fingerprint individuals. If the analytics provider changes, update that section in the same change. The data lives in the founder's Cloudflare account (Analytics & Logs, Web Analytics), and the same beacon works unchanged when hosting moves to Cloudflare.
 
 ## Rules
 
