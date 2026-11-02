@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import JourneySteps from '../../components/JourneySteps.astro';
+import ResetPromo from '../../components/ResetPromo.astro';
 import { url } from '../../lib/url';
 import { STEP_ONE } from '../../lib/checkin/journey';
 import { FEELINGS, MOMENT_QUESTIONS, ONE_THING_TO_TRY, OUTCOMES, TRIGGERS } from '../../lib/moments';
@@ -125,6 +126,7 @@ const exercises = Object.entries(STEP_ONE);
         ))}
       </p>
       <p class="fine-print">Haven't taken the check-in yet? <a href={url('/check/start/')}>It takes about four minutes</a>.</p>
+      <ResetPromo from="step-1" variant="inline" lead="Want to go further than one exercise?" />
     </div>
   </section>
 </Base>

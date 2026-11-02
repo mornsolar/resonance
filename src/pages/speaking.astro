@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import ResetPromo from '../components/ResetPromo.astro';
 import { CONTACT_EMAIL, LINKEDIN_URL } from '../lib/config';
 
 const SPEAKER_KIT_URL = 'https://claude.ai/artifact/BcQcieUmFboLaaKzCfNY2P';
@@ -74,6 +75,7 @@ const topics = [
         <a class="btn btn-primary" href={`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent('Speaking enquiry')}`}>Email me</a>
         <a class="btn btn-secondary" href={LINKEDIN_URL} target="_blank" rel="noopener">Connect on LinkedIn</a>
       </div>
+      <ResetPromo from="speaking" variant="inline" lead="Want to try the method yourself first?" />
     </div>
   </section>
 </Base>

@@ -1,6 +1,7 @@
 ---
 import { render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import ResetPromo from '../../components/ResetPromo.astro';
 import { getPublishedStories, formatDate, readingMinutes, type Story } from '../../lib/stories';
 import { url } from '../../lib/url';
 import { CONTACT_EMAIL, FOUNDER_NAME, LINKEDIN_URL } from '../../lib/config';
@@ -57,6 +58,14 @@ const jsonLd = {
         </div>
       </div>
     </aside>
+
+    <div class="read">
+      {story.id === 'phone-lock-prototype' ? (
+        <ResetPromo from="story" />
+      ) : (
+        <ResetPromo from="story" variant="inline" lead="If this sounds like your week, there's a small experiment you can join." />
+      )}
+    </div>
   </article>
 </Base>
 

@@ -17,7 +17,7 @@ const id = (name: string): string => `${idPrefix}-${name}`;
   method="POST"
   data-ajax-form
   data-reset-form
-  data-success="Thank you, you're in. I'll email you personally within a couple of days."
+  data-success="Thank you, you're in. I'll email you personally within a day."
 >
   <input type="hidden" name="_subject" value="One-Week Reset: new interest registration">
   <input type="hidden" name="form" value="one-week-reset">
@@ -54,6 +54,6 @@ const id = (name: string): string => `${idPrefix}-${name}`;
   <div>
     <button class="btn btn-primary" type="submit">Count me in</button>
     <p class="form-status" role="status" aria-live="polite"></p>
-    <p class="fine-print">I'll email you directly to arrange things. No spam, and no list beyond this.</p>
+    <p class="fine-print">I'll email you back within a day to arrange things. No spam, and no list beyond this.</p>
   </div>
 </form>

@@ -4,6 +4,7 @@ import '@fontsource-variable/fraunces/opsz-italic.css';
 import '@fontsource-variable/work-sans/wght.css';
 import '../styles/global.css';
 import SundayPause from '../components/SundayPause.astro';
+import Analytics from '../components/Analytics.astro';
 import { url } from '../lib/url';
 import { SITE_NAME, FOUNDER_NAME, CONTACT_EMAIL, LINKEDIN_URL } from '../lib/config';
 
@@ -155,6 +156,8 @@ function isCurrent(href: string): boolean {
       <p class="footer-legal">© {new Date().getFullYear()} {FOUNDER_NAME}. Made to be left, not scrolled.</p>
     </div>
   </footer>
+
+  <Analytics />
 
   <script>
     import '../scripts/forms';
