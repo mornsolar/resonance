@@ -29,7 +29,7 @@ Not entertain them.
 
 Just connect.
 
-That morning, I woke up at around half past eight. Alethia was already downstairs, lying on the sofa reading Harry Potter.
+That morning, I woke up at around half past eight. My daughter was already downstairs, lying on the sofa reading Harry Potter.
 
 Normally, I might have picked up my phone without even thinking.
 
@@ -65,7 +65,7 @@ That changed the whole experiment for me.
 
 * * *
 
-Later, Alethia sat at her desk and began painting.
+Later, she sat at her desk and began painting.
 
 I tried to give her my full attention.
 
@@ -119,7 +119,7 @@ Today was my first day without a job.
 
 I worry about what that means for our family.
 
-We have hoped that Alethia might have the same educational opportunities as her elder sister. Without an income, that suddenly feels less certain.
+We have hoped that my daughter might have the same educational opportunities as her elder sister. Without an income, that suddenly feels less certain.
 
 And I keep asking myself what I am really trying to provide.
 
