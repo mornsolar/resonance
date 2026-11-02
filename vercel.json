@@ -2,9 +2,9 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "redirects": [
     {
-      "source": "/:path*",
+      "source": "/:path(.*)",
       "has": [{ "type": "host", "value": "mornsolar\\.vercel\\.app" }],
-      "destination": "https://mornsolar.com/:path*",
+      "destination": "https://mornsolar.com/:path",
       "permanent": true
     }
   ]

@@ -31,8 +31,34 @@ describe('vercel.json redirect from the old address', () => {
   });
 
   it('keeps the whole path, so deep links and the query string carry over', () => {
-    expect(redirect.source).toBe('/:path*');
-    expect(redirect.destination).toBe('https://mornsolar.com/:path*');
+    expect(redirect.source).toBe('/:path(.*)');
+    expect(redirect.destination).toBe('https://mornsolar.com/:path');
+  });
+
+  // Vercel matches redirect paths strictly, so "/:path*" does NOT match a path that ends in a slash, and
+  // every page (/, /check/, /about/) ends in one. That shipped once and left QR-code links unredirected.
+  // These are the real paths people hold, checked against the source pattern as Vercel compiles it.
+  describe('source pattern', () => {
+    const compiled = new RegExp(`^${redirect.source.replace(':path(.*)', '(.*)')}$`);
+
+    it.each([
+      '/',
+      '/check/',
+      '/check',
+      '/about/',
+      '/reset/',
+      '/stories/phone-lock-prototype/',
+      '/favicon.svg',
+      '/downloads/spot-the-slot-machine.pdf',
+      '/index.html',
+      '/nothing-here/',
+    ])('matches %s', (path) => {
+      expect(compiled.test(path)).toBe(true);
+    });
+
+    it('is not the pattern that missed trailing slashes', () => {
+      expect(redirect.source).not.toBe('/:path*');
+    });
   });
 
   it('is permanent', () => {
