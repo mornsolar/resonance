@@ -1,14 +1,24 @@
 ---
 import Base from '../layouts/Base.astro';
 import { url } from '../lib/url';
-import { FORMSPREE_ENDPOINT } from '../lib/config';
+import { FORMSPREE_ENDPOINT, FOUNDER_NAME } from '../lib/config';
 
 const PLANNED_PRICE = '£15';
 
+const plainFacts = [
+  ['28 days', 'One small experiment a day, on paper. Skip whatever doesn\'t fit your life.'],
+  ['No app', 'It\'s a PDF. Print it, or write in it on a tablet.'],
+  ['No subscription', `A one-off payment of ${PLANNED_PRICE} is the plan, and nothing after that.`],
+  ['No streaks', 'Miss a day and its box stays empty. Don\'t catch up, don\'t start again. Just do today.'],
+  ['No minute-counting', 'You never add up your screen time or work towards a daily total. A few days do use the clock: one has you compare a guess with what the clock says, and some ask you to decide how long a use will last.'],
+  ['It ends with a Keep Three card', 'On Day 28 you choose the three practices you\'ll keep and write them on a card to cut out.'],
+  ['You score yourself before and after', 'Three statements, each out of 10, before Day 1 and again after Day 28. They are your own self-reported scores, not a measurement, and the number may not move. If it doesn\'t, that tells you something too.'],
+];
+
 const contents = [
   ['A letter, and the honest theory', 'Why minutes were never the point, what the research does and doesn\'t say, and what this workbook isn\'t.'],
-  ['Your starting point', 'Three quick self-scores, scored again on Day 28, so you can see whether anything actually moved.'],
-  ['28 days, one page each', 'Notice, then choose before you start, then choose where you stop, then bring someone in. Every day has a smaller version for awkward days.'],
+  ['Your starting point', 'Three quick self-scores, scored again after Day 28, so you can see whether anything actually moved.'],
+  ['28 days, one page each', 'Notice, then choose before you start, then choose where you stop, then bring someone in. Most days have a smaller version for awkward days.'],
   ['When you miss a day', 'Don\'t catch up. Don\'t start again. Just do today.'],
   ['Five extras', 'A seven-day quickstart, declaration cards, a fridge card, openers for a shared phone-free moment, and a notification audit.'],
 ];
@@ -20,7 +30,7 @@ const contents = [
         <p class="eyebrow">Coming soon · a printable workbook</p>
         <h1>The <span class="nowrap">Choice-Point</span> Month</h1>
         <p class="lede">A 28-day workbook for using your phone on purpose. Not less screen time. More of your own choices.</p>
-        <p>One small experiment a day, written in and ticked off. No app, no streaks, no counting your minutes.</p>
+        <p>One small experiment a day, ending in a Keep Three card: the three practices you choose to stay with. No app, no subscription, no streaks, no minute-counting.</p>
         <div class="actions">
           <a class="btn btn-primary" href="#interest">Tell me when it's ready</a>
           <a class="btn btn-secondary" href="#inside">Look inside</a>
@@ -29,6 +39,18 @@ const contents = [
       <figure class="cover">
         <img src={url('/workbook/p01-cover.webp')} width="800" height="1135" alt="Cover of The Choice-Point Month, a 28-day workbook by Chernyang Lee." fetchpriority="high">
       </figure>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="read">
+      <h2>The plain facts</h2>
+      <dl class="contents">
+        {plainFacts.map(([term, detail]) => (
+          <div><dt>{term}</dt><dd>{detail}</dd></div>
+        ))}
+      </dl>
+      <p>I'm <a href={url('/about/')}>{FOUNDER_NAME}</a>, a mathematician and former software engineer, and I wrote it. I don't have results from other people yet, so this page doesn't promise any.</p>
     </div>
   </section>
 
