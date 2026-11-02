@@ -137,7 +137,7 @@ describe('buildInsights', () => {
     const forget = buildInsights(answersAt(1, { obstacle: 'forget' }), scoreCheckin(answersAt(1)));
     const other = buildInsights(answersAt(1, { obstacle: 'other' }), scoreCheckin(answersAt(1)));
     expect(forget[2].body).not.toBe(other[2].body);
-    expect(forget[2].body).toContain('swipes');
+    expect(forget[2].body).toContain('swiping');
   });
 });
 
