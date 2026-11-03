@@ -1,11 +1,11 @@
 import { CAMPAIGN_FIELD, browserStorage, captureCampaign } from '../lib/campaign';
+import { CONTACT_EMAIL } from '../lib/config';
 
 // A tagged link (?src=youtube-description) is remembered for this tab and sent with any form.
 const campaign = captureCampaign(window.location.search, browserStorage());
 
 const DEFAULT_SUCCESS = "Thank you, you're in. Look out for a note from me soon.";
-const FAILURE =
-  'Something went wrong sending that. Please try again, or email me at chernyang.lee@gmail.com.';
+const FAILURE = `Something went wrong sending that. Please try again, or email me at ${CONTACT_EMAIL}.`;
 
 function setStatus(form: HTMLFormElement, message: string): void {
   const status = form.querySelector<HTMLElement>('.form-status');
