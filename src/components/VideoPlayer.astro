@@ -1,0 +1,174 @@
+---
+// Click-to-play YouTube player. Nothing is requested from YouTube or Google until the visitor presses play
+// (or a chapter), and then it plays from the privacy-enhanced player (youtube-nocookie.com).
+// Without JavaScript the poster is an ordinary link to the video on YouTube.
+import { url } from '../lib/url';
+import { youtubeWatchUrl } from '../lib/video';
+import type { Chapter } from '../lib/videos/intermittent-rewards';
+
+interface Props {
+  videoId: string;
+  title: string;
+  thumbnail: string;
+  thumbnailAlt: string;
+  chapters: readonly Chapter[];
+}
+
+const { videoId, title, thumbnail, thumbnailAlt, chapters } = Astro.props;
+---
+<div class="player" data-video-player data-video-id={videoId} data-video-title={title}>
+  <div class="frame" data-video-frame>
+    <a class="poster" href={youtubeWatchUrl(videoId)} target="_blank" rel="noopener" data-video-seek="0">
+      <img src={url(thumbnail)} alt={thumbnailAlt} width="1280" height="720" decoding="async" />
+      <span class="play" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" /></svg>
+      </span>
+      <span class="poster-label">Play the video<span class="sr-only"> (opens on YouTube if scripts are off)</span></span>
+    </a>
+  </div>
+</div>
+
+<nav class="chapters" aria-labelledby="chapters-heading">
+  <h2 id="chapters-heading">Chapters</h2>
+  <ol>
+    {chapters.map((chapter) => (
+      <li>
+        <a
+          href={youtubeWatchUrl(videoId, chapter.startSeconds)}
+          target="_blank"
+          rel="noopener"
+          data-video-seek={chapter.startSeconds}
+        >
+          <span class="time">{chapter.time}</span>
+          <span class="chapter-title">{chapter.title}</span>
+        </a>
+      </li>
+    ))}
+  </ol>
+</nav>
+
+<script>
+  import { youtubeEmbedUrl } from '../lib/video';
+
+  const player = document.querySelector<HTMLElement>('[data-video-player]');
+  const frame = player?.querySelector<HTMLElement>('[data-video-frame]');
+  const videoId = player?.dataset.videoId;
+  const videoTitle = player?.dataset.videoTitle ?? 'Video';
+
+  function playFrom(startSeconds: number): void {
+    if (!player || !frame || !videoId) return;
+    const source = youtubeEmbedUrl(videoId, { startSeconds, autoplay: true });
+    const existing = frame.querySelector<HTMLIFrameElement>('iframe');
+    if (existing) {
+      existing.src = source;
+    } else {
+      const iframe = document.createElement('iframe');
+      iframe.src = source;
+      iframe.title = videoTitle;
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      iframe.allowFullscreen = true;
+      iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+      frame.replaceChildren(iframe);
+    }
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    player.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
+    frame.querySelector('iframe')?.focus();
+  }
+
+  document.addEventListener('click', (event) => {
+    if (!(event.target instanceof Element)) return;
+    const link = event.target.closest<HTMLElement>('[data-video-seek]');
+    if (!link) return;
+    // Let modified clicks (new tab, new window) go to YouTube as normal.
+    if (event instanceof MouseEvent && (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0)) return;
+    const start = Number(link.dataset.videoSeek);
+    if (!Number.isFinite(start) || start < 0) return;
+    event.preventDefault();
+    playFrom(start);
+  });
+</script>
+
+<style>
+  .player { max-width: var(--wrap); margin: 0 auto; }
+  .frame {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    background: var(--paper-deep);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .poster { display: block; position: absolute; inset: 0; }
+  .poster img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .play {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 84px;
+    height: 84px;
+    margin: -42px 0 0 -42px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--forest);
+    color: var(--on-forest);
+    box-shadow: var(--shadow);
+    transition: transform 0.2s ease, background 0.2s ease;
+  }
+  .play svg { width: 40px; height: 40px; fill: currentColor; margin-left: 4px; }
+  .poster:hover .play { background: var(--forest-deep); transform: scale(1.05); }
+  .poster:focus-visible { outline: 3px solid var(--forest); outline-offset: -6px; }
+  .poster-label {
+    position: absolute;
+    right: 16px;
+    bottom: 16px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .frame :global(iframe) { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .chapters { max-width: var(--wrap); margin: 32px auto 0; }
+  .chapters h2 { font-size: clamp(22px, 3vw, 28px); margin: 0 0 12px; }
+  .chapters ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+    gap: 8px;
+  }
+  .chapters a {
+    display: flex;
+    gap: 14px;
+    align-items: baseline;
+    min-height: 44px;
+    padding: 10px 14px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--paper);
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .chapters a:hover { border-color: var(--forest); background: var(--selected); }
+  .chapters a:focus-visible { outline: 3px solid var(--forest); outline-offset: 2px; }
+  .time { flex: none; min-width: 3.2ch; font-variant-numeric: tabular-nums; font-weight: 600; color: var(--forest-deep); }
+  .chapter-title { line-height: 1.4; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .play { transition: none; }
+    .poster:hover .play { transform: none; }
+  }
+</style>
