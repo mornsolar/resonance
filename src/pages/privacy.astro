@@ -1,9 +1,9 @@
 ---
 import Base from '../layouts/Base.astro';
 import { url } from '../lib/url';
-import { CONTACT_EMAIL, FOUNDER_NAME } from '../lib/config';
+import { BUSINESS_EMAIL, CONTACT_EMAIL, FOUNDER_NAME } from '../lib/config';
 
-const UPDATED = '2 November 2026';
+const UPDATED = '3 November 2026';
 const RETENTION_MONTHS = 12;
 ---
 <Base title="How I handle your answers" description="What this site collects, where it goes, how long it is kept, and how to have it deleted.">
@@ -29,6 +29,7 @@ const RETENTION_MONTHS = 12;
       <h2>Where it goes</h2>
       <p>Forms are delivered by <a href="https://formspree.io/legal/privacy-policy" target="_blank" rel="noopener">Formspree</a>, which emails them to me and keeps a copy in my Formspree account. Formspree is based in the United States. If you book a chat, that goes through Google Calendar's appointment booking.</p>
       <p>To keep track of who I've replied to, I copy your first name, email, what you asked for and which link brought you here into a private Google Sheet in my own account. I also use Claude, an AI assistant made by Anthropic, to help me organise sign-ups and draft replies, so those details, your form answers and anything you wrote may be processed by it. I read and send every reply myself. Google and Anthropic are based in the United States.</p>
+      <p>Emails to and from {BUSINESS_EMAIL} go through <a href="https://purelymail.com/privacy" target="_blank" rel="noopener">Purelymail</a>, an email provider based in the United States.</p>
 
       <h2>What stays in your browser</h2>
       <p>While you go through the check-in and its two steps, your answers are kept in your browser tab so the next step can pick up where you left off. They disappear when you close the tab, and the result page has a button to clear them straight away. The Quiet reading setting on stories is remembered in your browser too. This site sets no tracking cookies.</p>
