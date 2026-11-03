@@ -1,0 +1,156 @@
+---
+import Base from '../layouts/Base.astro';
+import { url } from '../lib/url';
+import { CAMPAIGN_PARAM } from '../lib/campaign';
+import { youtubeWatchUrl } from '../lib/video';
+import {
+  CHECKLIST_TAG,
+  HOW_TO,
+  HOW_TO_READ,
+  INTRO,
+  PERSONALISATION_NOTE,
+  QUESTIONS,
+  READING_CAVEAT,
+} from '../lib/checklists/spot-the-slot-machine';
+import { VIDEO } from '../lib/videos/intermittent-rewards';
+
+const checkinHref = `${url('/check/')}?${CAMPAIGN_PARAM}=${CHECKLIST_TAG}`;
+const printUrl = 'mornsolar.com/check/';
+---
+<Base
+  title="Spot the slot machine"
+  description="Three questions to ask of any app that keeps pulling you back: how short the loop is, how unpredictable the reward is, and how tuned it is to you."
+  hidePause
+>
+  <section class="section">
+    <div class="read">
+      <p class="eyebrow">Checklist</p>
+      <h1>Spot the slot machine</h1>
+      <p class="lede">{INTRO}</p>
+      <p class="actions no-print">
+        <button type="button" class="btn btn-primary" data-print>Print or save as PDF</button>
+        <a class="btn btn-secondary" href={url('/downloads/spot-the-slot-machine.pdf')} download>Download the PDF</a>
+        <a class="btn btn-secondary" href={youtubeWatchUrl(VIDEO.id)} target="_blank" rel="noopener">Watch the video</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="section sheet">
+    <div class="read">
+      <p class="print-only app-line">App I'm checking: <span class="blank"></span></p>
+      <p class="how-to">{HOW_TO}</p>
+
+      <ol class="questions">
+        {QUESTIONS.map((question) => (
+          <li class="question">
+            <h2>{question.heading}</h2>
+            <ul class="checks">
+              {question.checks.map((check) => (
+                <li>
+                  <label>
+                    <input type="checkbox" />
+                    <span>{check}</span>
+                  </label>
+                </li>
+              ))}
+            </ul>
+            <p class="from-video"><strong>In the video:</strong> {question.fromTheVideo}</p>
+          </li>
+        ))}
+      </ol>
+
+      <p class="print-only noticed">What I noticed: <span class="blank"></span><span class="blank"></span></p>
+
+      <div class="reading">
+        <h2>How to read it</h2>
+        <ul>
+          {HOW_TO_READ.map((line) => <li>{line}</li>)}
+        </ul>
+        <p class="fine-print">{READING_CAVEAT}</p>
+        <p class="fine-print">{PERSONALISATION_NOTE}</p>
+      </div>
+
+      <div class="print-only print-foot">
+        <img src={url('/downloads/spot-checklist-qr.svg')} alt="QR code for the 3-minute phone check-in" width="96" height="96" />
+        <p>From the video "{VIDEO.title}".<br />The 3-minute phone check-in: <strong>{printUrl}</strong></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section no-print">
+    <div class="read">
+      <h2>One small next step</h2>
+      <p>If one app ticked several boxes, the 3-minute phone check-in shows how your whole phone is doing, and suggests one small change.</p>
+      <p><a class="btn btn-primary" href={checkinHref}>Try the 3-minute phone check-in</a></p>
+    </div>
+  </section>
+</Base>
+
+<script>
+  document.querySelector('[data-print]')?.addEventListener('click', () => window.print());
+</script>
+
+<style>
+  .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+  .how-to { font-weight: 600; }
+  .questions { list-style: none; margin: 28px 0; padding: 0; counter-reset: question; display: grid; gap: 28px; }
+  .question { counter-increment: question; padding: 20px 22px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); }
+  .question h2 { font-size: clamp(20px, 2.6vw, 24px); margin: 0 0 12px; }
+  .question h2::before { content: counter(question) '. '; color: var(--forest-deep); }
+  .checks { list-style: none; margin: 0 0 12px; padding: 0; display: grid; gap: 4px; }
+  .checks label { display: flex; gap: 14px; align-items: flex-start; min-height: 44px; padding: 8px 0; cursor: pointer; }
+  .checks input {
+    appearance: none;
+    flex: none;
+    width: 26px;
+    height: 26px;
+    margin: 0;
+    border: 2px solid var(--ink-soft);
+    border-radius: 6px;
+    background: var(--field);
+    display: grid;
+    place-content: center;
+  }
+  .checks input::after { content: ''; width: 12px; height: 12px; border-radius: 2px; background: var(--forest); transform: scale(0); }
+  .checks input:checked::after { transform: scale(1); }
+  .checks input:focus-visible { outline: 3px solid var(--forest); outline-offset: 2px; }
+  .from-video { color: var(--ink-soft); font-size: 16px; margin: 0; }
+  .reading h2 { font-size: clamp(20px, 2.6vw, 24px); }
+  .print-only { display: none; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .checks input::after { transition: transform 0.15s ease; }
+  }
+
+  @media print {
+    :global(.site-header),
+    :global(.site-footer),
+    :global(.skip-link),
+    .no-print { display: none !important; }
+    :global(body) { background: #fff; color: #000; font-size: 10.5pt; line-height: 1.4; }
+    .section { padding: 0 !important; border: 0 !important; }
+    .read { padding: 0; }
+    .print-only { display: block; }
+    :global(.eyebrow) { margin: 0 0 2pt; font-size: 8.5pt; }
+    :global(h1) { font-size: 24pt; margin: 0 0 4pt; }
+    .lede { font-size: 11pt; color: #000; margin: 0 0 8pt; }
+    .how-to { font-size: 10.5pt; margin: 6pt 0; }
+    .app-line,
+    .noticed { margin: 0 0 8pt; }
+    .blank { display: inline-block; width: 60%; border-bottom: 1px solid #000; height: 1.1em; vertical-align: bottom; }
+    .noticed .blank { display: block; width: 100%; margin-top: 12pt; }
+    .questions { gap: 8pt; margin: 8pt 0; }
+    .question { background: transparent; border-color: #000; border-radius: 6pt; padding: 6pt 12pt; break-inside: avoid; }
+    .question h2 { font-size: 13pt; margin: 0 0 3pt; }
+    .checks { gap: 0; margin: 0 0 3pt; }
+    .checks label { min-height: 0; padding: 2pt 0; gap: 10pt; }
+    .checks input { border-color: #000; background: #fff; width: 13pt; height: 13pt; }
+    .from-video { color: #000; font-size: 9pt; }
+    .reading h2 { font-size: 13pt; margin: 6pt 0 3pt; }
+    .reading ul { margin: 0 0 3pt; padding-left: 16pt; }
+    .reading li { margin: 0; font-size: 10pt; }
+    .reading .fine-print { font-size: 8.5pt; margin: 2pt 0; color: #000; }
+    .print-foot { display: flex !important; gap: 12pt; align-items: center; margin-top: 8pt; font-size: 9.5pt; }
+    .print-foot p { margin: 0; }
+  }
+</style>
