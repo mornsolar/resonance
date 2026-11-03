@@ -27,7 +27,7 @@ A lead-generation assessment built on the Priestley 10+5 structure: landing page
 
 ## Campaign tags
 
-Links we share carry a short tag, `?src=<tag>` (lower-case letters, digits and hyphens, up to 40 characters). `src/lib/campaign.ts` keeps the tag for the browser tab in `sessionStorage` and adds it as a `campaign` field to every Formspree submission: the ordinary forms (`src/scripts/forms.ts`) and the check-in (`src/scripts/checkin-send.ts`). Page-level visit counts come from Cloudflare Web Analytics (see Analytics below), but only these tags connect a sign-up to the link it came from. Tags in use: `youtube-description`, `youtube-comment`, `youtube-endcard`, `facebook-post`, `linkedin-post`, `pilot-workbook` (printed in the Choice-Point Month PDF). Add new tags freely, keep them descriptive, and list them here. The privacy page names this.
+Links we share carry a short tag, `?src=<tag>` (lower-case letters, digits and hyphens, up to 40 characters). `src/lib/campaign.ts` keeps the tag for the browser tab in `sessionStorage` and adds it as a `campaign` field to every Formspree submission: the ordinary forms (`src/scripts/forms.ts`) and the check-in (`src/scripts/checkin-send.ts`). Page-level visit counts come from Cloudflare Web Analytics (see Analytics below), but only these tags connect a sign-up to the link it came from. Tags in use: `youtube-description`, `youtube-comment`, `youtube-endcard`, `facebook-post`, `linkedin-post`, `pilot-workbook` (printed in the Choice-Point Month PDF), `companion-page` (the check-in button on the video page). Add new tags freely, keep them descriptive, and list them here. The privacy page names this.
 
 ## Video pages (`/videos/`)
 
