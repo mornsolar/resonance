@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import { url } from '../lib/url';
 import { CONTACT_EMAIL, FOUNDER_NAME } from '../lib/config';
 
-const UPDATED = '3 November 2026';
+const UPDATED = '5 November 2026';
 const RETENTION_MONTHS = 12;
 ---
 <Base title="How I handle your answers" description="What this site collects, where it goes, how long it is kept, and how to have it deleted.">
@@ -15,6 +15,9 @@ const RETENTION_MONTHS = 12;
 
       <h2>Who I am</h2>
       <p>Understory is run by me, {FOUNDER_NAME}. If you have any question about your data, email <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</p>
+
+      <h2>The Choice-Point Month pilot</h2>
+      <p>If you are taking part in the Choice-Point Month pilot, its forms are Google Forms, not part of this site. A separate note covers what the pilot collects, where it is kept, for how long and how to withdraw: <a href={url('/pilot/privacy/')}>how I handle your answers in the Choice-Point Month pilot</a>. The optional check-in that the pilot mentions is on this site, so the rest of this page covers it.</p>
 
       <h2>What is collected</h2>
       <ul>

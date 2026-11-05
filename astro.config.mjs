@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import { isListedInSitemap } from './src/lib/unlisted.ts';
 
 // The site is served from the root of mornsolar.com, so it needs no base path. The old mornsolar.vercel.app
 // address redirects here (see vercel.json) so printed QR codes and shared links keep working.
@@ -15,7 +16,8 @@ function resolveSite() {
 }
 
 export default defineConfig({
-  integrations: [sitemap()],
+  // Unlisted pages (the pilot privacy note) are served with noindex and kept out of the sitemap.
+  integrations: [sitemap({ filter: isListedInSitemap })],
   site: resolveSite(),
   base: '/',
 });
