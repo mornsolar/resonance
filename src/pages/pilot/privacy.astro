@@ -2,15 +2,14 @@
 import Base from '../../layouts/Base.astro';
 import { url } from '../../lib/url';
 import { CONTACT_EMAIL, FOUNDER_NAME } from '../../lib/config';
+import { PILOT_END_ISO, RETENTION_MONTHS, WITHDRAW_DAYS, addMonths, formatLongDate } from '../../lib/pilot-privacy';
 
-// The text is section 7, "Pilot privacy note", of the vault's Pilot Materials note for the Choice-Point Month,
-// and it matches the note pasted into the welcome emails. The dates and periods below are the founder's to confirm.
-// If one changes, change it here and in the emails together, and update UPDATED.
-const UPDATED = '5 November 2026';
-const PILOT_END = '31 January 2027';
-const RETENTION_MONTHS = 12;
-const KEEP_UNTIL = '31 January 2028';
-const WITHDRAW_DAYS = 7;
+// The text is section 7, "Pilot privacy note", of the vault's Pilot Materials note for the Choice-Point Month.
+// It must stay identical to that section, which is also pasted into the welcome emails (apart from the eyebrow,
+// the name, the date below, and links in place of printed addresses). The periods live in src/lib/pilot-privacy.ts.
+const UPDATED = '6 November 2026';
+const PILOT_END = formatLongDate(PILOT_END_ISO);
+const KEEP_UNTIL = formatLongDate(addMonths(PILOT_END_ISO, RETENTION_MONTHS));
 ---
 <Base
   title="The Choice-Point Month pilot: how I handle your answers"
@@ -32,7 +31,7 @@ const WITHDRAW_DAYS = 7;
         <li>Your form answers: whether you fit the pilot, how well you know me, what you've tried, how work reaches your phone, your three scores, how far you got, your views on some wording and price, your open answers, and your quote and permission choice.</li>
         <li>Anything you email me, including a reply to an optional question I'll send in January 2027.</li>
       </ul>
-      <p>I don't ask about your health. If you mention it, or other people, in an open answer, I'll hold that too, so please leave it out if you'd rather I didn't. The forms don't collect your email address.</p>
+      <p>I don't ask about your health, but one question asks whether any part of the workbook left you feeling worse, so you may mention it. If you mention your health, or other people, in an open answer, I'll hold that too, so please leave out anything you'd rather I didn't. The forms don't collect your email address.</p>
       <p>Your answers carry a code rather than your name, but they aren't anonymous to me, because I keep the list that matches the two.</p>
 
       <h2>Why</h2>
@@ -52,13 +51,13 @@ const WITHDRAW_DAYS = 7;
       <p>The optional online check-in is separate, and is covered by <a href={url('/privacy/')}>the site's privacy page</a>.</p>
 
       <h2>How long</h2>
-      <p>The pilot runs until {PILOT_END}. I keep your data for up to {RETENTION_MONTHS} months after that, so until {KEEP_UNTIL} at the latest. Then I delete it, or keep only anonymous totals.</p>
+      <p>I treat the pilot as running until {PILOT_END}, after the optional January question. I keep your data for up to {RETENTION_MONTHS} months after that, so until {KEEP_UNTIL} at the latest. Then I delete it, or keep only anonymous totals.</p>
       <p>If I publish your words with your permission, I keep them and the permission record while they're in use, and for up to {RETENTION_MONTHS} months after they come down. If you withdraw, I keep a one-line note under your code that you did, so that I don't use your words again.</p>
 
       <h2>How to withdraw</h2>
       <p>You can stop doing the workbook at any time without telling me. To stop my emails, or to see, correct or delete what I hold about you, email <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>. No reason needed. I'll do it within {WITHDRAW_DAYS} days, and you keep the workbook.</p>
       <p>Two limits: group totals that are already published can't be recalculated, though nobody can be identified from them, and I can't recall copies of your words that other people have already shared.</p>
-      <p>You can also complain to the Information Commissioner's Office (ICO): <a href="https://ico.org.uk/" target="_blank" rel="noopener">ico.org.uk</a>. I run Understory as a sole trader and have paid the ICO's data protection fee.</p>
+      <p>You can also complain to the Information Commissioner's Office: <a href="https://ico.org.uk/" target="_blank" rel="noopener">ico.org.uk</a>.</p>
 
       <p>This pilot is for adults aged 18 and over.</p>
     </div>
