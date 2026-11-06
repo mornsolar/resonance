@@ -12,6 +12,7 @@ interface Props {
   title?: string;
   description?: string;
   hidePause?: boolean;
+  noindex?: boolean;
   quietCapable?: boolean;
   ogType?: 'website' | 'article';
   jsonLd?: Record<string, unknown>;
@@ -24,6 +25,7 @@ const {
   title,
   description = DEFAULT_DESCRIPTION,
   hidePause = false,
+  noindex = false,
   quietCapable = false,
   ogType = 'website',
   jsonLd,
@@ -64,6 +66,7 @@ function isCurrent(href: string): boolean {
   <title>{pageTitle}</title>
   <meta name="description" content={description}>
   <meta name="color-scheme" content="light dark">
+  {noindex && <meta name="robots" content="noindex">}
   <meta name="theme-color" content="#F7F5EE" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#111815" media="(prefers-color-scheme: dark)">
   <link rel="canonical" href={canonical}>
